@@ -2,8 +2,10 @@ function jjdecode(str){
 
     var t = str;
 
+    var result = ""
+
     function out(c){
-        t += c;
+        result += c;
     }
 
     t.replace(/^\s+|\s+$/g, "");
@@ -459,6 +461,7 @@ function jjdecode(str){
         throw Error("no match : "+data);
         break;
     }
+    return result;
 }
 
 exports.jjdecode = jjdecode;
