@@ -3,8 +3,10 @@
  */
 var http = require('http');
 var request = require('request');
+var qs = require('querystring');
 var jjencode = require('./jjencode');
 var config = require('./config.js');
+
 
 
 //Парсит токен из хтмл текста
@@ -18,7 +20,8 @@ function parse_token_from_html(content){
     return js_token;
 }
 
-var main_req = request.defaults({proxy: config.proxy_host+":" + config.proxy_port});
+var main_req = request.defaults({proxy: config.proxy_host+":" + config.proxy_port,
+   jar: true});
 
 //Получает главную страницу букинга
 function get_main_page_html(callback){
@@ -74,10 +77,34 @@ function find_trains(station_id_from, station_id_to, date_dep, token,  callback)
            'GV-Ajax' : '1',
            'GV-Referer': config.booking_url,
            'GV-Token': token
-        }
+        },
+        method: 'POST',
+        body: qs.stringify({
+            'station_id_from': station_id_from,
+            'station_id_till': station_id_to,
+            'date_dep': date_dep,
+            'time_dep': "00:00",
+            'time_dep_till': null,
+            'another_ec': null,
+            'search': null
+        })
     };
+
+    console.log(qs.stringify({
+        'station_id_from': station_id_from,
+        'station_id_till': station_id_to,
+        'date_dep': date_dep,
+        'time_dep': '00:00',
+        'time_dep_till': null,
+        'another_ec': null,
+        'search': null
+    }));
+
     main_req(options, function(error, response, body){
-        //TO DO
+       //if (!error && response.statusCode == 200){
+           //console.log(response.statusCode);
+        console.log(body);
+      // }
     });
 }
 
@@ -86,3 +113,4 @@ function ask_station_list(){
 }
 
 module.exports.ask_token = ask_token;
+module.exports.find_trains = find_trains;
