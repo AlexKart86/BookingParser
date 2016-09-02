@@ -21,7 +21,8 @@ function parse_token_from_html(content){
 }
 
 var main_req = request.defaults({proxy: config.proxy_host+":" + config.proxy_port,
-   jar: true});
+   jar: true,
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'}});
 
 //Получает главную страницу букинга
 function get_main_page_html(callback){
@@ -58,7 +59,9 @@ var  req = http.request({
 
 req.end();*/
 
-
+function formatDateUZ(date){
+    return date.format("mm.dd.yyyy");
+}
 
 function ask_token(callback){
     get_main_page_html(function(error, response, body){
@@ -74,10 +77,10 @@ function find_trains(station_id_from, station_id_to, date_dep, token,  callback)
     var options = {
         url: config.booking_search_train_url,
         headers: {
-           'GV-Ajax' : '1',
+           'GV-Ajax': '1',
            'GV-Referer': config.booking_url_ru,
            'GV-Token': token,
-           'Content-Type': 'application/x-www-form-urlencoded'
+
             //'Host': 'booking.uz.gov.ua',
            //'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:48.0)',
            //'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -102,8 +105,9 @@ function find_trains(station_id_from, station_id_to, date_dep, token,  callback)
     main_req(options, function(error, response, body){
        if (!error && response.statusCode == 200){
          var obj = JSON.parse(body);
-         if (obj.error){
-             throw Error(obj.error);
+         console.log(obj);
+           if (obj.error){
+             throw Error(obj.value);
          }
          callback(obj);
        }

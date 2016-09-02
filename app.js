@@ -2,6 +2,8 @@ var parser = require('./parser');
 
 
 
+
+
 parser.ask_token(function (token) {
     console.log(token);
     parser.find_trains(2200001, 2218000, '04.09.2016', token, function(train_obj){
