@@ -77,7 +77,7 @@ function find_trains(station_id_from, station_id_to, date_dep, token,  callback)
            'GV-Ajax' : '1',
            'GV-Referer': config.booking_url_ru,
            'GV-Token': token,
-            'Content-Type': 'application/x-www-form-urlencoded'
+           'Content-Type': 'application/x-www-form-urlencoded'
             //'Host': 'booking.uz.gov.ua',
            //'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:48.0)',
            //'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -98,16 +98,6 @@ function find_trains(station_id_from, station_id_to, date_dep, token,  callback)
             'search': null
         })
     };
-
-    console.log(qs.stringify({
-        'station_id_from': station_id_from,
-        'station_id_till': station_id_to,
-        'date_dep': date_dep,
-        'time_dep': '00:00',
-        'time_dep_till': null,
-        'another_ec': null,
-        'search': null
-    }));
 
     main_req(options, function(error, response, body){
        if (!error && response.statusCode == 200){
