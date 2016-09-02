@@ -76,13 +76,14 @@ function find_trains(station_id_from, station_id_to, date_dep, token,  callback)
         headers: {
            'GV-Ajax' : '1',
            'GV-Referer': config.booking_url_ru,
-           'GV-Token': token
-           //'Host': 'booking.uz.gov.ua',
+           'GV-Token': token,
+            'Content-Type': 'application/x-www-form-urlencoded'
+            //'Host': 'booking.uz.gov.ua',
            //'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:48.0)',
            //'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
            //'Accept-Language': 'ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3',
            //'Accept-Encoding': 'gzip, deflate',
-           //'Content-Type': 'application/x-www-form-urlencoded',
+
            //'Referer' : config.booking_url_ru,
            //'Connection': 'keep-alive'
         },
@@ -109,12 +110,14 @@ function find_trains(station_id_from, station_id_to, date_dep, token,  callback)
     }));
 
     main_req(options, function(error, response, body){
-       //if (!error && response.statusCode == 200){
-           //console.log(response.statusCode);
-        //console.log(response);
-        //console.log(error);
-        console.log(body);
-      // }
+       if (!error && response.statusCode == 200){
+         var obj = JSON.parse(body);
+         if (obj.error){
+             throw Error(obj.error);
+         }
+         callback(obj);
+       }
+        //TO DO error handling
     });
 }
 
