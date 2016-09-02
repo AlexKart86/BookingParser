@@ -94,7 +94,7 @@ function find_trains(station_id_from, station_id_to, date_dep, token,  callback)
         body: qs.stringify({
             'station_id_from': station_id_from,
             'station_id_till': station_id_to,
-            'date_dep': date_dep,
+            'date_dep': formatDateUZ(date_dep),
             'time_dep': "00:00",
             'time_dep_till': null,
             'another_ec': null,
