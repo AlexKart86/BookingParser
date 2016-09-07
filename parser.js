@@ -6,6 +6,7 @@ var request = require('request');
 var qs = require('querystring');
 var jjencode = require('./jjencode');
 var config = require('./config.js');
+var dt = require('dateformat');
 
 
 
@@ -60,7 +61,7 @@ var  req = http.request({
 req.end();*/
 
 function formatDateUZ(date){
-    return date.format("mm.dd.yyyy");
+    return dt(date, "dd.mm.yyyy");
 }
 
 function ask_token(callback){
