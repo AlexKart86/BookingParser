@@ -36,7 +36,13 @@
 
   <script>
     var load_station_list = function(query, process){
+        $.ajax({
+            url: "/get_stations",
+            method: "POST",
+            data: {"name": query},
+            dataType: "json",
 
+        })
     };
 
     $(function(){
