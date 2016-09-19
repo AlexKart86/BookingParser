@@ -4,10 +4,39 @@ var fs = require('fs');
 var path = require('path');
 
 
+//Парсит тело запроса
+function parse_body(req, callback){
+    var body = "";
+    req.on('data', function(data){
+       body += data;
+    });
+    req.on('end', function(){
+        callback(body);
+    })
+}
+
+
 var server =  http.createServer(function(req, res){
+  console.log(req.url);
   switch (req.url) {
       case '/':
           sendFile(res, 'html/index.html');
+          break;
+      case '/get_stations':
+          parse_body(req, function(body){
+             body = JSON.parse(body);
+             console.log(body);
+             if (!body.name){
+                 throw Error("name required!");
+             }
+              if (body.name.length > 0)
+              {
+                  parser.ask_station_list(body.name, function(arr){
+                      console.log(arr);
+                  });
+              }
+
+          });
           break;
       default :
           try {
@@ -44,7 +73,7 @@ function sendFile(res, filename){
 
 server.listen(2233, 'localhost');
 
-
+/*
 parser.ask_token(function (token) {
     console.log(token);
     var d = new Date();
@@ -52,7 +81,7 @@ parser.ask_token(function (token) {
     parser.find_trains(2200001, 2218000, d, token, function(train_obj){
       console.log(train_obj);
     });
-});
+});*/
 
 
 

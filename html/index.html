@@ -8,11 +8,9 @@
   <body>
   <link rel="stylesheet" href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="bower_components/bootstrap-select/dist/css/bootstrap-select.min.css" />
     <form class="form-inline">
       <div class="form-group">
-        <label for="station_from">Станция отправления</label>
-        <input class="selectpicker form-control" id="station_from"> </input>
+        <input class="selectpicker form-control" id="station_from" placeholder="Станция отправления"> </input>
       </div>
       <div class="form-group">
         <label for="station_to">Станция назначения</label>
@@ -32,16 +30,19 @@
     <script src="bower_components/moment/min/moment-with-locales.min.js"></script>
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="bower_components/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script src="bower_components/typeahead.js/dist/typeahead.jquery.min.js"></script>
 
   <script>
-    var load_station_list = function(query, process){
+    var load_station_list = function(query, syncResult, asyncResult){
         $.ajax({
             url: "/get_stations",
             method: "POST",
-            data: {"name": query},
+            data: JSON.stringify({"name": query}),
+            contentType: 'application/json',
             dataType: "json",
-
+            success: function (data) {
+                asyncResult(data);
+            }
         })
     };
 
@@ -50,9 +51,9 @@
         locale: 'ru',
         format: 'DD.MM.YYYY'
       });
-      $('#station_from').typeahead({
-        source:
-      })
+      $('#station_from').typeahead(null, {
+        source: load_station_list
+      });
     })
   </script>
 

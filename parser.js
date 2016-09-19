@@ -1,3 +1,4 @@
+'use strict';
 /**
  * Created by alex_kart on 31.08.2016.
  */
@@ -81,15 +82,6 @@ function find_trains(station_id_from, station_id_to, date_dep, token,  callback)
            'GV-Ajax': '1',
            'GV-Referer': config.booking_url_ru,
            'GV-Token': token,
-
-            //'Host': 'booking.uz.gov.ua',
-           //'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:48.0)',
-           //'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-           //'Accept-Language': 'ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3',
-           //'Accept-Encoding': 'gzip, deflate',
-
-           //'Referer' : config.booking_url_ru,
-           //'Connection': 'keep-alive'
         },
         method: 'POST',
         body: qs.stringify({
@@ -116,9 +108,32 @@ function find_trains(station_id_from, station_id_to, date_dep, token,  callback)
     });
 }
 
-function ask_station_list(){
-    //TO DO
+function ask_station_list(keywords, callback){
+    var options = {
+        url: config.booking_search_station_prefix + encodeURIComponent(keywords) + '/',
+        method: 'POST'
+    };
+    main_req(options, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            //TO DO error handling
+            var obj = JSON.parse(body);
+            console.log(obj);
+            if (obj.error) {
+                throw Error(obj.value);
+            }
+            if (!obj.value) {
+                throw Error("В списке станций нет value");
+            }
+            //console.log(obj.value);
+            callback(obj.value);
+        }
+        else {
+            console.log(`error: ${error}, resp: ${response.statusCode}`);
+        }
+    });
 }
 
 module.exports.ask_token = ask_token;
 module.exports.find_trains = find_trains;
+module.exports.ask_station_list = ask_station_list;
+
