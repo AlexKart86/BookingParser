@@ -32,7 +32,9 @@ var server =  http.createServer(function(req, res){
               if (body.name.length > 0)
               {
                   parser.ask_station_list(body.name, function(arr){
-                      console.log(arr);
+                      //console.log(arr);
+                      res.write(JSON.stringify(arr));
+                      res.end();
                   });
               }
 

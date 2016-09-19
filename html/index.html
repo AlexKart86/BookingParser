@@ -51,7 +51,9 @@
         locale: 'ru',
         format: 'DD.MM.YYYY'
       });
-      $('#station_from').typeahead(null, {
+      $('#station_from').typeahead({
+        minLength: 2
+      }, {
         source: load_station_list
       });
     })
