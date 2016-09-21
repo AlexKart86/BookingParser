@@ -22,7 +22,7 @@ function parse_token_from_html(content){
     return js_token;
 }
 
-var main_req = request.defaults({proxy: config.proxy_host+":" + config.proxy_port,
+var main_req = request.defaults({
    jar: true,
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}});
 

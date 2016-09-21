@@ -37,6 +37,9 @@
     <script src="bower_components/typeahead.js/dist/typeahead.jquery.min.js"></script>
 
   <script>
+    var station_list = {};
+
+
     var load_station_list = function(query, syncResult, asyncResult){
         $.ajax({
             url: "/get_stations",
@@ -45,6 +48,11 @@
             contentType: 'application/json',
             dataType: "json",
             success: function (data) {
+                $.each(data, function(){
+                  $.each(this, function(data){
+                     station_list[data.station_name] = data.station_id;
+                  });
+                });
                 asyncResult(data);
             }
         })
@@ -62,8 +70,10 @@
         source: load_station_list,
         display: 'title'
       });
+
+
       $('#apply').on('click', function(){
-        alert('Click!');
+        console.log($('#station_from').val());
       });
     })
   </script>

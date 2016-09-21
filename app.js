@@ -16,6 +16,9 @@ function parse_body(req, callback){
 }
 
 
+function check_trains(station_from, station_to, date_train, res){
+}
+
 var server =  http.createServer(function(req, res){
   console.log(req.url);
   switch (req.url) {
