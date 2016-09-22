@@ -103,7 +103,7 @@ function find_trains(station_id_from, station_id_to, date_dep, token,  callback)
            if (obj.error){
              throw Error(obj.value);
          }
-         callback(obj);
+         callback(obj.value);
        }
         //TO DO error handling
     });

@@ -27,7 +27,13 @@
                 </div>
               </div>
               <div class="form-group">
-                  <button type="button" class="btn btn-primary" id="apply">Отслеживать</button>
+                  <button type="button" class="btn btn-primary" id="start">Отслеживать</button>
+              </div>
+              <div class="form-group">
+                    <button type="button" class="btn btn-danger" id="stop">Прекратить отслеживать</button>
+              </div>
+              <div id="results">
+
               </div>
             </form>
        </div>
@@ -41,6 +47,18 @@
     var station_list = {};
     var timerID = "";
 
+    function display_train(train){
+       var main_div = document.createElement("div");
+       main_div.innerHTML = "Поезд: <b>"+train.num+"</b>"
+       $('#results').append(main_div);
+    }
+
+    function display_results(data){
+        $('#results').empty();
+        $.each(data, function(idx, element){
+            display_train(element);
+        });
+    }
 
     var load_station_list = function(query, syncResult, asyncResult){
         $.ajax({
@@ -73,6 +91,7 @@
             dataType: "json",
             success: function(data){
                 console.log(data);
+                display_results(data);
                 timerID = setTimeout(function(){
                      search_iteration(station_from, station_to, dt);
                       }, 2000);
@@ -82,6 +101,7 @@
 
 
     $(function(){
+      $('#stop').hide();
       $('#dtp').datetimepicker({
         locale: 'ru',
         format: 'DD.MM.YYYY'
@@ -95,7 +115,7 @@
       });
 
 
-      $('#apply').on('click', function(){
+      $('#start').on('click', function(){
         var station_from = station_list[$('#station_from').val()];
         var station_to = station_list[$('#station_to').val()];
         var dt = $('#dtp_value').val();
@@ -113,8 +133,19 @@
             alert("Херня в дате");
             return;
         }
-        search_iteration(station_from, station_to, dt);
+        $('#start').hide();
+        $('#stop').show();
+        //Запускаем
+        timerID = setTimeout(function(){
+              search_iteration(station_from, station_to, dt);
+          }, 0);
       });
+
+      $('#stop').on('click', function(){
+          clearInterval(timerID);
+          $('#stop').hide();
+          $('#start').show();
+      })
     })
   </script>
   <style>
