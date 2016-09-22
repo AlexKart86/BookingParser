@@ -22,9 +22,18 @@ function parse_token_from_html(content){
     return js_token;
 }
 
-var main_req = request.defaults({proxy: config.proxy_host+":" + config.proxy_port,
-   jar: true,
-    headers: {'Content-Type': 'application/x-www-form-urlencoded'}});
+
+
+var main_req =
+    (function(){
+      return config.is_use_proxy ? request.defaults(
+              {proxy: config.proxy_host+":" + config.proxy_port,
+                  jar: true,
+                  headers: {'Content-Type': 'application/x-www-form-urlencoded'}}) :
+          request.defaults(
+              {  jar: true,
+                  headers: {'Content-Type': 'application/x-www-form-urlencoded'}});
+  } )();
 
 //Получает главную страницу букинга
 function get_main_page_html(callback){

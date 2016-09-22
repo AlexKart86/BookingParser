@@ -2,6 +2,7 @@ var parser = require('./parser');
 var http = require('http');
 var fs = require('fs');
 var path = require('path');
+var config = require('./config');
 
 
 //Парсит тело запроса
@@ -90,7 +91,7 @@ function sendFile(res, filename){
     })
 }
 
-server.listen(2233, '192.168.1.40');
+server.listen(config.server_port, config.server_ip);
 
 /*
 parser.ask_token(function (token) {

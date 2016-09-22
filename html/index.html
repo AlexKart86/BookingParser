@@ -36,6 +36,7 @@
 
               </div>
               <div class="container">
+                  <div>Обновлено: <span id="upd_time"></span></div>
                   <table class="table">
                       <thead>
                          <tr>
@@ -81,7 +82,7 @@
         $.each(data, function(idx, element){
             display_train(element);
         });
-        $('#results').before("<div>Обновлено: "+ new Date() +" </div>");
+        $('#upd_time').html(new Date().toLocaleTimeString());
     }
 
     var load_station_list = function(query, syncResult, asyncResult){
@@ -116,9 +117,10 @@
             success: function(data){
                 console.log(data);
                 display_results(data);
-                timerID = setTimeout(function () {
-                    search_iteration(station_from, station_to, dt);
-                }, 10000);
+                if (is_running)
+                    timerID = setTimeout(function () {
+                     search_iteration(station_from, station_to, dt);
+                  }, 10000);
             }
         });
     }
@@ -160,6 +162,7 @@
         $('#start').hide();
         $('#stop').show();
         //Запускаем
+        is_running = true;
         timerID = setTimeout(function(){
               search_iteration(station_from, station_to, dt);
           }, 0);
@@ -168,6 +171,7 @@
       $('#stop').on('click', function(){
           clearInterval(timerID);
           timerID = "";
+          is_running = false;
           $('#stop').hide();
           $('#start').show();
       })
@@ -176,14 +180,10 @@
   <style>
       html, body, .container-table {
           height: 100%;
-          margin-left: 10px;
+          margin: 10px;
       }
-      .container-table {
-          display: table;
-      }
-      .vertical-center-row {
-          display: table-cell;
-          vertical-align: middle;
+      .form-inline > * {
+          margin:5px;
       }
   </style>
 
