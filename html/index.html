@@ -32,8 +32,20 @@
               <div class="form-group">
                     <button type="button" class="btn btn-danger" id="stop">Прекратить отслеживать</button>
               </div>
-              <div id="results">
+              <div class="container">
+                  <table class="table">
+                      <thead>
+                         <tr>
+                             <th>Поезд</th>
+                             <th>Отправление</th>
+                             <th>Прибытие</th>
+                             <th>Места</th>
+                         </tr>
+                      </thead>
+                      <tbody id="results">
 
+                      </tbody>
+                  </table>
               </div>
             </form>
        </div>
@@ -48,9 +60,12 @@
     var timerID = "";
 
     function display_train(train){
-       var main_div = document.createElement("div");
-       main_div.innerHTML = "Поезд: <b>"+train.num+"</b>"
-       $('#results').append(main_div);
+       var main_div = document.createElement("tr");
+       $('#results').append($('<tr>'+
+                '<td>' + train.num+ '</td>' +
+                '<td>' + train.from.src_date +'</td>' +
+                '<td>' + train.till.src_date +'</td>' +
+               '</tr>'));
     }
 
     function display_results(data){
