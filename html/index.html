@@ -9,6 +9,7 @@
   <body>
   <link rel="stylesheet" href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="html/typeaheadjs.css" />
   <div class="container container-table">
       <div class="row vertical-center-row">
             <form class="form-inline">
@@ -21,7 +22,7 @@
               <div class="form-group">
                 <label for="dtp">Дата</label>
                 <div class="input-group date" id="dtp">
-                  <input type="text" class="form-control"><span class="input-group-addon">
+                  <input type="text" class="form-control" id="dtp_value"><span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
               </div>
@@ -38,6 +39,7 @@
 
   <script>
     var station_list = {};
+    var timerID = "";
 
 
     var load_station_list = function(query, syncResult, asyncResult){
@@ -48,15 +50,36 @@
             contentType: 'application/json',
             dataType: "json",
             success: function (data) {
-                $.each(data, function(){
-                  $.each(this, function(data){
-                     station_list[data.station_name] = data.station_id;
-                  });
+                //console.log(data);
+                $.each(data, function(idx, dt){
+                     //console.log(dt);
+                     station_list[dt.title] = dt.station_id;
                 });
                 asyncResult(data);
             }
         })
-    }; 
+    };
+
+    function search_iteration(station_from, station_to, dt){
+        $.ajax({
+            url: "/find_trains",
+            method: "POST",
+            data: JSON.stringify({
+                "station_from": station_from,
+                "station_to": station_to,
+                "date": dt
+            }),
+            contentType: 'application/json',
+            dataType: "json",
+            success: function(data){
+                console.log(data);
+                timerID = setTimeout(function(){
+                     search_iteration(station_from, station_to, dt);
+                      }, 2000);
+            }
+        });
+    }
+
 
     $(function(){
       $('#dtp').datetimepicker({
@@ -73,7 +96,24 @@
 
 
       $('#apply').on('click', function(){
-        console.log($('#station_from').val());
+        var station_from = station_list[$('#station_from').val()];
+        var station_to = station_list[$('#station_to').val()];
+        var dt = $('#dtp_value').val();
+
+        if (!station_from) {
+            alert("Херня в станции отправления");
+            return;
+        }
+        if (!station_to) {
+            alert("Херня в станции назначения");
+            return;
+        }
+        //alert($('#dtp_value').val());
+        if (dt.length == 0){
+            alert("Херня в дате");
+            return;
+        }
+        search_iteration(station_from, station_to, dt);
       });
     })
   </script>

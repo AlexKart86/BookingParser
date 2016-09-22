@@ -22,7 +22,7 @@ function parse_token_from_html(content){
     return js_token;
 }
 
-var main_req = request.defaults({
+var main_req = request.defaults({proxy: config.proxy_host+":" + config.proxy_port,
    jar: true,
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}});
 
@@ -62,7 +62,8 @@ var  req = http.request({
 req.end();*/
 
 function formatDateUZ(date){
-    return dt(date, "dd.mm.yyyy");
+   // return dt(date, "dd.mm.yyyy");
+    return date;
 }
 
 function ask_token(callback){
@@ -136,4 +137,7 @@ function ask_station_list(keywords, callback){
 module.exports.ask_token = ask_token;
 module.exports.find_trains = find_trains;
 module.exports.ask_station_list = ask_station_list;
+
+//for test only
+module.exports.format_date = formatDateUZ;
 

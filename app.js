@@ -16,7 +16,14 @@ function parse_body(req, callback){
 }
 
 
-function check_trains(station_from, station_to, date_train, res){
+function check_trains(res, station_from, station_to, date_train){
+    parser.ask_token(function(token){
+        parser.find_trains(station_from, station_to, date_train, token, function(train_list){
+            console.log(train_list);
+            res.write(JSON.stringify(train_list));
+            res.end();
+        })
+    })
 }
 
 var server =  http.createServer(function(req, res){
@@ -40,7 +47,14 @@ var server =  http.createServer(function(req, res){
                       res.end();
                   });
               }
-
+          });
+          break;
+      case '/find_trains':
+          parse_body(req, function(body){
+              body = JSON.parse(body);
+              console.log(body);
+              //TO DO: Errors!
+              check_trains(res, body.station_from, body.station_to, body.date);
           });
           break;
       default :

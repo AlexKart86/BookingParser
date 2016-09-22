@@ -1,8 +1,3 @@
-/**
- * Created by alex_kart on 21.09.2016.
- */
-setTimeout(function(){
-    console.log('ololo0');
-}, 100000);
+var tt = require('./parser');
 
-console.log('Trololo');
+console.log(new Date(Date.parse("22.09.2016")));
