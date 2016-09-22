@@ -30,7 +30,10 @@
                   <button type="button" class="btn btn-primary" id="start">Отслеживать</button>
               </div>
               <div class="form-group">
-                    <button type="button" class="btn btn-danger" id="stop">Прекратить отслеживать</button>
+                    <button type="button" class="btn btn-danger" id="stop" hidden="hidden">Прекратить отслеживать</button>
+              </div>
+              <div>
+
               </div>
               <div class="container">
                   <table class="table">
@@ -57,14 +60,19 @@
 
   <script>
     var station_list = {};
-    var timerID = "";
+    var is_running = false;
 
     function display_train(train){
        var main_div = document.createElement("tr");
+       var seats = "";
+       $.each(train.types, function(idx, data){
+         seats += data.title + ": <b>" + data.places + "</b><br/>";
+       });
        $('#results').append($('<tr>'+
                 '<td>' + train.num+ '</td>' +
                 '<td>' + train.from.src_date +'</td>' +
                 '<td>' + train.till.src_date +'</td>' +
+                '<td>'+seats +'</td>' +
                '</tr>'));
     }
 
@@ -73,6 +81,7 @@
         $.each(data, function(idx, element){
             display_train(element);
         });
+        $('#results').before("<div>Обновлено: "+ new Date() +" </div>");
     }
 
     var load_station_list = function(query, syncResult, asyncResult){
@@ -107,9 +116,9 @@
             success: function(data){
                 console.log(data);
                 display_results(data);
-                timerID = setTimeout(function(){
-                     search_iteration(station_from, station_to, dt);
-                      }, 2000);
+                timerID = setTimeout(function () {
+                    search_iteration(station_from, station_to, dt);
+                }, 10000);
             }
         });
     }
@@ -158,6 +167,7 @@
 
       $('#stop').on('click', function(){
           clearInterval(timerID);
+          timerID = "";
           $('#stop').hide();
           $('#start').show();
       })
@@ -166,6 +176,7 @@
   <style>
       html, body, .container-table {
           height: 100%;
+          margin-left: 10px;
       }
       .container-table {
           display: table;

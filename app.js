@@ -90,7 +90,7 @@ function sendFile(res, filename){
     })
 }
 
-server.listen(2233, 'localhost');
+server.listen(2233, '192.168.1.40');
 
 /*
 parser.ask_token(function (token) {
