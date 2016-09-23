@@ -7,7 +7,15 @@ var request = require('request');
 var qs = require('querystring');
 var jjencode = require('./jjencode');
 var config = require('./config.js');
-var dt = require('dateformat');
+var util = require('util');
+
+
+function BookingAnswerError(message){
+    this.message = message;
+}
+
+util.inherits(BookingAnswerError, Error);
+BookingAnswerError.prototype.name = "BookingAnswerError";
 
 
 
@@ -21,8 +29,6 @@ function parse_token_from_html(content){
     var js_token = js_token_code.match(js_regexp)[2];
     return js_token;
 }
-
-
 
 var main_req =
     (function(){
@@ -42,34 +48,6 @@ function get_main_page_html(callback){
     main_req(options, callback);
 }
 
-
-
-
-/*
-var  req = http.request({
-        host: config.proxy_host,
-        port: config.proxy_port,
-        path: config.booking_url_ru
-    },
-    function (resp){
-        var content = "";
-
-        resp.on('error', function(e){
-            throw Error(e.message);
-        });
-
-        resp.on('data', function(data){
-            content += data;
-        });
-
-        resp.on('end', function (){
-            get_token(content);
-        } );
-    }
-);
-
-req.end();*/
-
 function formatDateUZ(date){
    // return dt(date, "dd.mm.yyyy");
     return date;
@@ -79,9 +57,11 @@ function ask_token(callback){
     get_main_page_html(function(error, response, body){
        if (!error && response.statusCode == 200){
            var token = parse_token_from_html(body)
-           callback(token);
+           callback(null, token);
        }
-       //TO DO error raising
+       else {
+           callback(error, null);
+       }
     })
 }
 
@@ -91,7 +71,7 @@ function find_trains(station_id_from, station_id_to, date_dep, token,  callback)
         headers: {
            'GV-Ajax': '1',
            'GV-Referer': config.booking_url_ru,
-           'GV-Token': token,
+           'GV-Token': token
         },
         method: 'POST',
         body: qs.stringify({
@@ -107,14 +87,20 @@ function find_trains(station_id_from, station_id_to, date_dep, token,  callback)
 
     main_req(options, function(error, response, body){
        if (!error && response.statusCode == 200){
-         var obj = JSON.parse(body);
-         console.log(obj);
-           if (obj.error){
-             throw Error(obj.value);
-         }
-         callback(obj.value);
+           try{
+                var obj = JSON.parse(body);
+                console.log(obj);
+                if (obj.error)
+                  callback(new BookingAnswerError(obj.error), null);
+                else
+                  callback(null, obj.value);
+           }
+           catch (e){
+               callback(e, null); 
+           }
        }
-        //TO DO error handling
+       else 
+           callback(error, null);
     });
 }
 
@@ -124,21 +110,26 @@ function ask_station_list(keywords, callback){
         method: 'POST'
     };
     main_req(options, function(error, response, body) {
-        if (!error && response.statusCode == 200) {
-            //TO DO error handling
-            var obj = JSON.parse(body);
-            console.log(obj);
-            if (obj.error) {
-                throw Error(obj.value);
+        try {
+            if (!error && response.statusCode == 200) {
+                var obj = JSON.parse(body);
+                console.log(obj);
+                if (obj.error) {
+                   callback(new BookingAnswerError(obj.value), null);
+                   return;
+                }
+                if (!obj.value) {
+                  callback(new BookingAnswerError("В списке станций нет value"), null);
+                  return;
+                }
+                callback(null, obj.value);
             }
-            if (!obj.value) {
-                throw Error("В списке станций нет value");
+            else {
+                callback(error, null);
             }
-            //console.log(obj.value);
-            callback(obj.value);
         }
-        else {
-            console.log(`error: ${error}, resp: ${response.statusCode}`);
+        catch (e){
+           callback(e, null)
         }
     });
 }

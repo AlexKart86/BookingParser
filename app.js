@@ -16,10 +16,24 @@ function parse_body(req, callback){
     })
 }
 
+function handle_errors(error, res){
+    if (error){
+        res.statusCode = 400;
+        console.error(error.message);
+        res.body = error.message;
+        res.end();
+        return false;
+    }
+    else
+        return true;
+}
+
 
 function check_trains(res, station_from, station_to, date_train){
-    parser.ask_token(function(token){
-        parser.find_trains(station_from, station_to, date_train, token, function(train_list){
+    parser.ask_token(function(error, token){
+        if (!handle_errors(error, res)) return;
+        parser.find_trains(station_from, station_to, date_train, token, function(error, train_list){
+            if (!handle_errors(error, res)) return;
             console.log(train_list);
             res.write(JSON.stringify(train_list));
             res.end();
@@ -42,8 +56,8 @@ var server =  http.createServer(function(req, res){
              }
               if (body.name.length > 0)
               {
-                  parser.ask_station_list(body.name, function(arr){
-                      //console.log(arr);
+                  parser.ask_station_list(body.name, function(error, arr){
+                      if (!handle_errors(error, res)) return;
                       res.write(JSON.stringify(arr));
                       res.end();
                   });
