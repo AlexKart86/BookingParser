@@ -35,12 +35,15 @@ function copy_prop_with_check(source, dest, prop_name){
     source[prop_name] = dest[prop_name];
 }
 
+
 //Создает объект "Поезд" по данным, пришедшим от УЗ
 function Train(json){
   copy_prop_with_check(json, this, "num");
   copy_prop_with_check(json, this, "model");
   copy_prop_with_check(json, this, "category");
-    
+  copy_prop_with_check(json, this, "from");
+  copy_prop_with_check(json, this, "till");
+
 }
 
 //Парсит токен из хтмл текста
@@ -136,9 +139,12 @@ function find_trains_ext(station_id_from, station_id_to, date_dep, token, callba
            callback(err, null);
            return;
        }
-
-
-
+       var trains = [];
+       for (var i in data)
+       {
+           trains.push(new Train(data[i]));
+       }
+       console.log(trains);
     });
 }
 
@@ -175,6 +181,7 @@ function ask_station_list(keywords, callback){
 
 module.exports.ask_token = ask_token;
 module.exports.find_trains = find_trains;
+module.exports.find_trains_ext = find_trains_ext;
 module.exports.ask_station_list = ask_station_list;
 
 //for test only

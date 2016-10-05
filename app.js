@@ -41,6 +41,16 @@ function check_trains(res, station_from, station_to, date_train){
     })
 }
 
+function check_trains_ext(res, station_from, station_to, date_train){
+    parser.ask_token(function(error, token){
+        if (!handle_errors(error, res)) return;
+        parser.find_trains_ext(station_from, station_to, date_train, token, function(error, train_list){
+            if (!handle_errors(error, res)) return;
+            res.end();
+        })
+    })
+}
+
 var server =  http.createServer(function(req, res){
   console.log(req.url);
   switch (req.url) {
@@ -70,6 +80,14 @@ var server =  http.createServer(function(req, res){
               console.log(body);
               //TO DO: Errors!
               check_trains(res, body.station_from, body.station_to, body.date);
+          });
+          break;
+      case '/find_trains_ex':
+          parse_body(req, function(body){
+              body = JSON.parse(body);
+              console.log(body);
+              //TO DO: Errors!
+              check_trains_ext(res, body.station_from, body.station_to, body.date);
           });
           break;
       default :

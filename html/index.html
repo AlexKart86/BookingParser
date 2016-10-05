@@ -32,9 +32,9 @@
               <div class="form-group">
                     <button type="button" class="btn btn-danger" id="stop" hidden="hidden">Прекратить отслеживать</button>
               </div>
-              <div>
-
-              </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary" id="start_ex">Сильно отслеживать</button>
+                </div>
               <div class="container">
                   <div>Обновлено: <span id="upd_time"></span></div>
                   <table class="table">
@@ -150,6 +150,27 @@
         display: 'title'
       });
 
+
+      $('#start_ex').on('click', function() {
+                  var station_from = station_list[$('#station_from').val()];
+                  var station_to = station_list[$('#station_to').val()];
+                  var dt = $('#dtp_value').val();
+                  $.ajax({
+                      url: "/find_trains_ex",
+                      method: "POST",
+                      data: JSON.stringify({
+                          "station_from": station_from,
+                          "station_to": station_to,
+                          "date": dt
+                      }),
+                      contentType: 'application/json',
+                      dataType: "json",
+                      success: function (data) {
+                          console.log(data);
+                      }
+                  });
+              }
+          );
 
       $('#start').on('click', function(){
         var station_from = station_list[$('#station_from').val()];
