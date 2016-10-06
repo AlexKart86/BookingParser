@@ -32,7 +32,7 @@ function check_property(obj, prop){
 
 function copy_prop_with_check(source, dest, prop_name){
     check_property(source, prop_name);
-    source[prop_name] = dest[prop_name];
+    dest[prop_name] = source[prop_name];
 }
 
 
@@ -43,7 +43,6 @@ function Train(json){
   copy_prop_with_check(json, this, "category");
   copy_prop_with_check(json, this, "from");
   copy_prop_with_check(json, this, "till");
-
 }
 
 //Парсит токен из хтмл текста
@@ -144,6 +143,8 @@ function find_trains_ext(station_id_from, station_id_to, date_dep, token, callba
        {
            trains.push(new Train(data[i]));
        }
+       //Пробегаемся по всем поездам  
+        
        console.log(trains);
     });
 }
