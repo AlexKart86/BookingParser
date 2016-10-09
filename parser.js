@@ -38,11 +38,15 @@ function copy_prop_with_check(source, dest, prop_name){
 
 //Создает объект "Поезд" по данным, пришедшим от УЗ
 function Train(json){
+  var val = JSON.parse(json, function(key, value){
+
+  });
   copy_prop_with_check(json, this, "num");
   copy_prop_with_check(json, this, "model");
   copy_prop_with_check(json, this, "category");
   copy_prop_with_check(json, this, "from");
   copy_prop_with_check(json, this, "till");
+
 }
 
 //Парсит токен из хтмл текста
@@ -75,8 +79,11 @@ function get_main_page_html(callback){
 }
 
 function formatDateUZ(date){
-   // return dt(date, "dd.mm.yyyy");
-    return date;
+    // return dt(date, "dd.mm.yyyy");
+    var day =  date.substr(0, 2);
+    var month = date.substr(3, 2);
+    var year = date.substr(6, 4);
+    return (new Date(year, month-1, day)).getTime()/1000;
 }
 
 function ask_token(callback){
@@ -103,7 +110,7 @@ function find_trains(station_id_from, station_id_to, date_dep, token,  callback)
         body: qs.stringify({
             'station_id_from': station_id_from,
             'station_id_till': station_id_to,
-            'date_dep': formatDateUZ(date_dep),
+            'date_dep': date_dep,
             'time_dep': "00:00",
             'time_dep_till': null,
             'another_ec': null,
@@ -115,7 +122,7 @@ function find_trains(station_id_from, station_id_to, date_dep, token,  callback)
        if (!error && response.statusCode == 200){
            try{
                 var obj = JSON.parse(body);
-                console.log(obj);
+                //console.log(obj);
                 if (obj.error)
                   callback(new BookingAnswerError(obj.error), null);
                 else
@@ -130,22 +137,121 @@ function find_trains(station_id_from, station_id_to, date_dep, token,  callback)
     });
 }
 
+//Return list of places in coach
+function find_places_in_coach(station_id_from, station_id_to, date_dep, train,
+                              coach_num, coach_type_id, coach_class, token, callback){
+    var options = {
+        url: config.booking_search_places_url,
+        headers: {
+            'GV-Ajax': '1',
+            'GV-Referer': config.booking_url_ru,
+            'GV-Token': token
+        },
+        method: 'POST',
+        body: qs.stringify({
+            'station_id_from': station_id_from,
+            'station_id_till': station_id_to,
+            'train': train,
+            'coach_num': coach_num,
+            'coach_class': coach_class,
+            'coach_type_id': coach_type_id,
+            'date_dep': formatDateUZ(date_dep),
+            'change_scheme': 1
+        })
+    };
+    main_req(options, function(error, response, body){
+        if (!error && response.statusCode == 200){
+            try{
+                var obj = JSON.parse(body);
+                if (obj.error) {
+                    console.error(obj.error);
+                    callback(new BookingAnswerError(obj.value), null);
+                }
+                else {
+                    console.log(obj.value);
+                    callback(null, obj.value);
+                }
+            }
+            catch (e){
+                callback(e, null);
+            }
+        }
+        else
+            callback(error, null);
+    });
+
+}
+
+//Find free seats in train by coach_type
+function find_coaches(station_id_from, station_id_to, date_dep, train, model,
+                       coach_type, token, callback){
+    var options = {
+        url: config.booking_search_coaches_url,
+        headers: {
+            'GV-Ajax': '1',
+            'GV-Referer': config.booking_url_ru,
+            'GV-Token': token
+        },
+        method: 'POST',
+        body: qs.stringify({
+            'station_id_from': station_id_from,
+            'station_id_till': station_id_to,
+            'date_dep':  formatDateUZ(date_dep),
+            'train': train,
+            'model': model,
+            'coach_type': coach_type,
+            'round_trip': 0,
+            'another_ec': 0
+        })
+    };
+    main_req(options, function(error, response, body){
+        if (!error && response.statusCode == 200){
+            try{
+                var obj = JSON.parse(body, function(key, value){
+                    var ignore_tags = ["content"];
+                    if (ignore_tags.indexOf(key) > -1) return undefined;
+                    return value;
+                });
+                if (obj.error) {
+                    console.error(obj.error);
+                    callback(new BookingAnswerError(obj.value), null);
+                }
+                else {
+                    var coaches = obj.coaches;
+                    coaches.forEach(function (coach_item) {
+                        find_places_in_coach(station_id_from, station_id_to, date_dep, train, coach_item.num, coach_item.coach_type_id,
+                          coach_item.coach_class, token, callback);
+                    });
+                }
+            }
+            catch (e){
+                callback(e, null);
+            }
+        }
+        else
+            callback(error, null);
+    });
+
+}
 
 //find trains with seats detail
 function find_trains_ext(station_id_from, station_id_to, date_dep, token, callback){
-    find_trains(station_id_from, station_id_to, date_dep, token, function (err, data) {
+    find_trains(station_id_from, station_id_to, date_dep, token, function (err, trains) {
        if (err) {
            callback(err, null);
            return;
-       }
-       var trains = [];
-       for (var i in data)
-       {
-           trains.push(new Train(data[i]));
-       }
-       //Пробегаемся по всем поездам  
-        
-       console.log(trains);
+        }
+
+       //Пробегаемся по всем поездам
+       trains.forEach(function(item){
+          var vagon_types = item["types"];
+          //По всем вагонам в поезде
+          vagon_types.forEach(function(vagon_type){
+              //Определяемся с типами вагонов в поезде
+              find_coaches(station_id_from, station_id_to, date_dep,
+                item.num, item.model, vagon_type.letter, token,  callback);
+          });
+       });
     });
 }
 
