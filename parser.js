@@ -38,15 +38,11 @@ function copy_prop_with_check(source, dest, prop_name){
 
 //Создает объект "Поезд" по данным, пришедшим от УЗ
 function Train(json){
-  var val = JSON.parse(json, function(key, value){
-
-  });
   copy_prop_with_check(json, this, "num");
   copy_prop_with_check(json, this, "model");
   copy_prop_with_check(json, this, "category");
   copy_prop_with_check(json, this, "from");
   copy_prop_with_check(json, this, "till");
-
 }
 
 //Парсит токен из хтмл текста
@@ -162,14 +158,19 @@ function find_places_in_coach(station_id_from, station_id_to, date_dep, train,
     main_req(options, function(error, response, body){
         if (!error && response.statusCode == 200){
             try{
-                var obj = JSON.parse(body);
+                var obj = JSON.parse(body, function(key, value){
+                    if (key == "content")
+                        return undefined;
+                    else
+                        return value;
+                });
                 if (obj.error) {
-                    console.error(obj.error);
+                    console.error(obj.value);
                     callback(new BookingAnswerError(obj.value), null);
                 }
                 else {
                     console.log(obj.value);
-                    callback(null, obj.value);
+                    callback(null, obj.value.places);
                 }
             }
             catch (e){
@@ -179,7 +180,6 @@ function find_places_in_coach(station_id_from, station_id_to, date_dep, train,
         else
             callback(error, null);
     });
-
 }
 
 //Find free seats in train by coach_type
@@ -245,12 +245,27 @@ function find_trains_ext(station_id_from, station_id_to, date_dep, token, callba
        //Пробегаемся по всем поездам
        trains.forEach(function(item){
           var vagon_types = item["types"];
-          //По всем вагонам в поезде
+          //Пробегаемся по вагонам в поезде
+          var promise_arr = [];
           vagon_types.forEach(function(vagon_type){
-              //Определяемся с типами вагонов в поезде
-              find_coaches(station_id_from, station_id_to, date_dep,
-                item.num, item.model, vagon_type.letter, token,  callback);
+             var f = function(){
+                 return new Promise(function(resolve, reject){
+                     find_coaches(station_id_from, station_id_to, date_dep,
+                         item.num, item.model, vagon_type.letter, token,  function(error, data){
+                             if (error)
+                                 reject(error);
+                             else
+                                 resolve(data);
+                         });
+                 }).then(function(data){
+                    console.log(data);
+                 });
+             };
+             promise_arr.push(f);
           });
+          Promise.all(promise_arr)
+              .then(result => callback(null, trains),
+                     error =>  callback(error, null));
        });
     });
 }
