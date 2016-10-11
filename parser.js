@@ -218,10 +218,35 @@ function find_coaches(station_id_from, station_id_to, date_dep, train, model,
                 }
                 else {
                     var coaches = obj.coaches;
+                    var promises = [];
                     coaches.forEach(function (coach_item) {
-                        find_places_in_coach(station_id_from, station_id_to, date_dep, train, coach_item.num, coach_item.coach_type_id,
-                          coach_item.coach_class, token, callback);
+                        var f = function(){
+                            var p = new Promise(function(resolve, reject){
+                                find_places_in_coach(station_id_from, station_id_to, date_dep, train, coach_item.num, coach_item.coach_type_id,
+                                    coach_item.coach_class, token, function(error, data){
+                                        if (error)
+                                            reject(error);
+                                        else
+                                        {
+                                            coach_item.places = data;
+                                            resolve();
+                                        }
+                                            // resolve({"coach_item": coach_item,
+                                            //          "data": data});
+                                    });
+                            });
+                            // p.then(function(data){
+                            //     data.coach_item.places = data.data;
+                            // });
+                            return p;
+                        };
+                       promises.push(f());
                     });
+                    Promise.all(promises)
+                        .then(function(data){
+                            console.log(coaches);
+                            callback(null, coaches);
+                        });
                 }
             }
             catch (e){
@@ -249,7 +274,7 @@ function find_trains_ext(station_id_from, station_id_to, date_dep, token, callba
           var promise_arr = [];
           vagon_types.forEach(function(vagon_type){
              var f = function(){
-                 return new Promise(function(resolve, reject){
+                var p =  new Promise(function(resolve, reject){
                      find_coaches(station_id_from, station_id_to, date_dep,
                          item.num, item.model, vagon_type.letter, token,  function(error, data){
                              if (error)
@@ -257,15 +282,20 @@ function find_trains_ext(station_id_from, station_id_to, date_dep, token, callba
                              else
                                  resolve(data);
                          });
-                 }).then(function(data){
-                    console.log(data);
                  });
+                p.then(function(data){
+                    vagon_type.places = data;
+                });
+                return p;
              };
-             promise_arr.push(f);
+             promise_arr.push(f());
           });
-          Promise.all(promise_arr)
-              .then(result => callback(null, trains),
-                     error =>  callback(error, null));
+          // Promise.all(promise_arr)
+          //     .then(result => {
+          //                        console.log(vagon_types);
+          //                        callback(null, trains);
+          //                     },
+          //            error =>  callback(error, null));
        });
     });
 }
