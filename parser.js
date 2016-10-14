@@ -169,7 +169,7 @@ function find_places_in_coach(station_id_from, station_id_to, date_dep, train,
                     callback(new BookingAnswerError(obj.value), null);
                 }
                 else {
-                    console.log(obj.value);
+                    //console.log(obj.value);
                     callback(null, obj.value.places);
                 }
             }
@@ -244,7 +244,7 @@ function find_coaches(station_id_from, station_id_to, date_dep, train, model,
                     });
                     Promise.all(promises)
                         .then(function(data){
-                            console.log(coaches);
+                            //console.log(coaches);
                             callback(null, coaches);
                         });
                 }
@@ -268,35 +268,46 @@ function find_trains_ext(station_id_from, station_id_to, date_dep, token, callba
         }
 
        //Пробегаемся по всем поездам
+       var train_promises = [];
        trains.forEach(function(item){
-          var vagon_types = item["types"];
-          //Пробегаемся по вагонам в поезде
-          var promise_arr = [];
-          vagon_types.forEach(function(vagon_type){
-             var f = function(){
-                var p =  new Promise(function(resolve, reject){
-                     find_coaches(station_id_from, station_id_to, date_dep,
-                         item.num, item.model, vagon_type.letter, token,  function(error, data){
-                             if (error)
-                                 reject(error);
-                             else
-                                 resolve(data);
-                         });
-                 });
-                p.then(function(data){
-                    vagon_type.places = data;
-                });
-                return p;
-             };
-             promise_arr.push(f());
-          });
-          // Promise.all(promise_arr)
-          //     .then(result => {
-          //                        console.log(vagon_types);
-          //                        callback(null, trains);
-          //                     },
-          //            error =>  callback(error, null));
+          var f_train = function() {
+              var pr_train =  new Promise(function(resolve, reject){
+                  var vagon_types = item["types"];
+                  //Пробегаемся по вагонам в поезде
+                  var promise_arr = [];
+                  vagon_types.forEach(function (vagon_type) {
+                      var f = function () {
+                          var p = new Promise(function (resolve, reject) {
+                              find_coaches(station_id_from, station_id_to, date_dep,
+                                  item.num, item.model, vagon_type.letter, token, function (error, data) {
+                                      if (error)
+                                          reject(error);
+                                      else
+                                          resolve(data);
+                                  });
+                          });
+                          p.then(function (data) {
+                              vagon_type.places = data;
+                          });
+                          return p;
+                      };
+                      promise_arr.push(f());
+                  });
+                  Promise.all(promise_arr)
+                      .then(
+                          success => resolve(vagon_types),
+                          error =>  reject(error));
+
+              });
+              return pr_train;
+          };
+          train_promises.push(f_train());
        });
+       Promise.all(train_promises)
+        .then(success => callback(null, trains),
+              error => callback(error)
+        );
+
     });
 }
 
@@ -310,7 +321,7 @@ function ask_station_list(keywords, callback){
         try {
             if (!error && response.statusCode == 200) {
                 var obj = JSON.parse(body);
-                console.log(obj);
+                //console.log(obj);
                 if (obj.error) {
                    callback(new BookingAnswerError(obj.value), null);
                    return;
