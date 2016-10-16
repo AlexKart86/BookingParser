@@ -47,6 +47,7 @@ function check_trains_ext(res, station_from, station_to, date_train){
         parser.find_trains_ext(station_from, station_to, date_train, token, function(error, train_list){
             if (!handle_errors(error, res)) return;
             console.info(train_list);
+            res.write(JSON.stringify(train_list));
             res.end();
         })
     })

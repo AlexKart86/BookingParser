@@ -287,7 +287,7 @@ function find_trains_ext(station_id_from, station_id_to, date_dep, token, callba
                                   });
                           });
                           p.then(function (data) {
-                              vagon_type.places = data;
+                              vagon_type.place_detail = data;
                           });
                           return p;
                       };

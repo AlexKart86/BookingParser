@@ -37,7 +37,7 @@
                 </div>
               <div class="container">
                   <div>Обновлено: <span id="upd_time"></span></div>
-                  <table class="table">
+                  <table class="table table-responsive table-hover table-condensed">
                       <thead>
                          <tr>
                              <th>Поезд</th>
@@ -58,24 +58,75 @@
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
     <script src="bower_components/typeahead.js/dist/typeahead.jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
   <script>
     var station_list = {};
     var is_running = false;
     var check_interval = 10000;
 
+    var seq = (function (){
+        var i = 1;
+        return function(){
+            return i++;
+        }
+    })();
+
     function display_train(train){
-       var main_div = document.createElement("tr");
-       var seats = "";
+       let main_div = document.createElement("tr");
+       let seats = "";
+       let id = "id"+seq();
+       let seats_detail = "";
+       let str = "";
        $.each(train.types, function(idx, data){
-         seats += data.title + ": <b>" + data.places + "</b><br/>";
+         //Список мест общий
+
+         seats += data.title + ": <b>" + data.places + "</b>";
+
+         //Для плацкартов и купе сюда будем пихать число верхних и нижних мест
+         //Из детального списка мест
+         let high_count = 0;
+         let low_count = 0;
+
+
+         //Список  мест детальный в дополнительных строках
+         str += `<tr class="collapse ${id} info">
+                    <td>${data.title}</td>`;
+         var coaches = [];
+           $.each(data.place_detail, function(idx, data){
+               var places = [];
+               for (var place_info in data.places){
+                    var val = data.places[place_info];
+                    if (Array.isArray(val)) {
+                        $.each(val, function(idx, data){
+                            places.push(data);
+                            if (data % 2 == 0)
+                              high_count ++;
+                            else
+                              low_count ++;
+                        });
+                    }
+               }
+               coaches.push(`Вагон:<b> ${data.num}</b> Места: `+places.join("  "));
+           });
+         var coaches_str = coaches.join('<br>');
+         str += `<td colspan="3">${coaches_str}</td>`;
+         str += '</tr>';
+
+         if (data.title == "Плацкарт" || data.title == "Купе"){
+             seats += ` (Верхних: <b>${high_count}</b> / Нижних: <b>${low_count}</b>)`;
+         }
+          seats += "<br>";
+
        });
-       $('#results').append($('<tr>'+
-                '<td>' + train.num+ '</td>' +
-                '<td>' + train.from.src_date +'</td>' +
-                '<td>' + train.till.src_date +'</td>' +
-                '<td>'+seats +'</td>' +
-               '</tr>'));
+
+       $('#results').append($(`<tr class="clickable" data-toggle="collapse" id="${id}" data-target=".${id}">
+                <td>${train.num}</td>
+                <td>${train.from.src_date}</td>
+                <td>${train.till.src_date}</td>
+                <td>${seats}</td>
+               </tr>`));
+       $('#results').append($(str));
     }
 
     function display_results(data){
@@ -106,14 +157,14 @@
 
     function search_iteration(station_from, station_to, dt){
         $.ajax({
-            url: "/find_trains",
+            url: "/find_trains_ex",
             method: "POST",
             data: JSON.stringify({
                 "station_from": station_from,
                 "station_to": station_to,
                 "date": dt
             }),
-            contentType: 'application/json',
+            contentType: 'application/json; charset=utf-8',
             dataType: "json",
             success: function(data){
                 console.log(data);
@@ -215,6 +266,12 @@
       }
       .form-inline > * {
           margin:5px;
+      }
+      table .table {
+          cursor: pointer;
+      }
+      table .collapse.in {
+          display:table-row;
       }
   </style>
 
