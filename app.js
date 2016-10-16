@@ -19,7 +19,7 @@ function parse_body(req, callback){
 function handle_errors(error, res){
     if (error){
         res.statusCode = 400;
-        console.error(error.message);
+        console.error(error.stack + '\n' +  error.message);
         res.body = error.message;
         res.end();
         return false;
@@ -59,10 +59,13 @@ var server =  http.createServer(function(req, res){
       case '/':
           sendFile(res, 'html/index.html');
           break;
+      case '/subscribe':
+          sendFile(res, 'html/subscribe.html');
+          break;
       case '/get_stations':
           parse_body(req, function(body){
              body = JSON.parse(body);
-             console.log(body);
+             //console.log(body);
              if (!body.name){
                  throw Error("name required!");
              }
@@ -79,7 +82,7 @@ var server =  http.createServer(function(req, res){
       case '/find_trains':
           parse_body(req, function(body){
               body = JSON.parse(body);
-              console.log(body);
+              //console.log(body);
               //TO DO: Errors!
               check_trains(res, body.station_from, body.station_to, body.date);
           });
@@ -87,7 +90,7 @@ var server =  http.createServer(function(req, res){
       case '/find_trains_ex':
           parse_body(req, function(body){
               body = JSON.parse(body);
-              console.log(body);
+              //console.log(body);
               //TO DO: Errors!
               check_trains_ext(res, body.station_from, body.station_to, body.date);
           });
