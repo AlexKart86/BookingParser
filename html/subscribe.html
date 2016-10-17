@@ -28,6 +28,12 @@
                 </div>
             </div>
             <div class="form-group">
+                <input class="selectpicker form-control" id="train" placeholder="Номер поезда"> </input>
+            </div>
+            <div class="form-group">
+                <input type="checkbox" id="is_report_" >Сообщать, если появились купе </input>
+            </div>
+            <div class="form-group">
                 <button type="button" class="btn btn-primary" id="start">Отслеживать</button>
             </div>
         </form>
@@ -38,6 +44,7 @@
 <script src="bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
 <script src="bower_components/typeahead.js/dist/typeahead.jquery.min.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="bower_components/push.js/push.js"></script>
 
 <style>
     html, body, .container-fluid  {
@@ -55,6 +62,59 @@
         display:table-row;
     }
 </style>
+
+<script>
+    var station_list = {};
+
+    var load_station_list = function(query, syncResult, asyncResult){
+        $.ajax({
+            url: "/get_stations",
+            method: "POST",
+            data: JSON.stringify({"name": query}),
+            contentType: 'application/json',
+            dataType: "json",
+            success: function (data) {
+                //console.log(data);
+                $.each(data, function(idx, dt){
+                    //console.log(dt);
+                    station_list[dt.title] = dt.station_id;
+                });
+                asyncResult(data);
+            }
+        })
+    };
+
+    var start_on_click = function() {
+//        setInterval(function(){
+            Push.create("Hello world!", {
+                body: "How's it hangin'?",
+                requireInteraction: true,
+                //timeout: 30000,
+                onClick: function () {
+                    window.focus();
+                    this.close();
+                }
+            });
+//        }, 2000);
+
+    };
+
+    $(function() {
+        $('#stop').hide();
+        $('#dtp').datetimepicker({
+            locale: 'ru',
+            format: 'DD.MM.YYYY'
+        });
+        $('#station_from, #station_to').typeahead({
+            minLength: 2,
+            highlight: true
+        }, {
+            source: load_station_list,
+            display: 'title'
+        });
+        $('#start').on('click', start_on_click);
+    });
+</script>
 
 </body>
 
