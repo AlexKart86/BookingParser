@@ -10,33 +10,25 @@
 <link rel="stylesheet" href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
 <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
 <link rel="stylesheet" href="html/typeaheadjs.css" />
-<div class="container container-table">
+<div class="container-fluid">
     <div class="row vertical-center-row">
-        <form class="form-inline">
+        <form>
             <div class="form-group">
-                <input class="selectpicker form-control" id="station_from" placeholder="Станция отправления"> </input>
+               <input class="selectpicker form-control" id="station_from" placeholder="Станция отправления"> </input>
             </div>
             <div class="form-group">
                 <input class="selectpicker form-control" id="station_to" placeholder="Станция назначения"> </input>
             </div>
             <div class="form-group">
-                <label for="dtp">Дата</label>
+
+                <!--<label for="dtp">Дата</label>-->
                 <div class="input-group date" id="dtp">
-                    <input type="text" class="form-control" id="dtp_value"><span class="input-group-addon">
+                    <input type="text" class="form-control" id="dtp_value" placeholder="Дата отправления"><span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
             </div>
             <div class="form-group">
                 <button type="button" class="btn btn-primary" id="start">Отслеживать</button>
-            </div>
-            <div class="form-group">
-                <button type="button" class="btn btn-danger" id="stop" hidden="hidden">Прекратить отслеживать</button>
-            </div>
-            <div class="form-group">
-                <button type="button" class="btn btn-primary" id="start_ex">Сильно отслеживать</button>
-            </div>
-            <div class="container">
-                <div>Обновлено: <span id="upd_time"></span></div>
             </div>
         </form>
     </div>
@@ -48,9 +40,10 @@
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
 <style>
-    html, body, .container-table {
+    html, body, .container-fluid  {
         height: 100%;
         margin: 10px;
+        max-width: 400px;
     }
     .form-inline > * {
         margin:5px;

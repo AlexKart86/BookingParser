@@ -12,12 +12,17 @@ var util = require('util');
 
 function BookingAnswerError(message){
     this.message = message;
+    if (Error.captureStackTrace) {
+        Error.captureStackTrace(this, BookingAnswerError);
+    } else {
+        this.stack = (new Error()).stack;
+    }
 }
 
 util.inherits(BookingAnswerError, Error);
 BookingAnswerError.prototype.name = "BookingAnswerError";
 
-function PropertyError(property){
+/*function PropertyError(property){
     this.property = property;
     this.message = "Отсутствует поле "+property;
 }
@@ -43,7 +48,7 @@ function Train(json){
   copy_prop_with_check(json, this, "category");
   copy_prop_with_check(json, this, "from");
   copy_prop_with_check(json, this, "till");
-}
+}*/
 
 //Парсит токен из хтмл текста
 function parse_token_from_html(content){
@@ -120,7 +125,7 @@ function find_trains(station_id_from, station_id_to, date_dep, token,  callback)
                 var obj = JSON.parse(body);
                 //console.log(obj);
                 if (obj.error)
-                  callback(new BookingAnswerError(obj.error), null);
+                  callback(new BookingAnswerError(obj.value), null);
                 else
                   callback(null, obj.value);
            }
@@ -231,13 +236,8 @@ function find_coaches(station_id_from, station_id_to, date_dep, train, model,
                                             coach_item.places = data;
                                             resolve();
                                         }
-                                            // resolve({"coach_item": coach_item,
-                                            //          "data": data});
                                     });
                             });
-                            // p.then(function(data){
-                            //     data.coach_item.places = data.data;
-                            // });
                             return p;
                         };
                        promises.push(f());
