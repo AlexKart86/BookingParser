@@ -1,0 +1,20 @@
+{
+    "1": {
+        "task": {
+            "station_id_from": 1111,
+            "station_id_to": 2223,
+            "train": "К99",
+            "is_warn_when_kupe": true,
+            "is_warn_when_plac": true
+        }
+    },
+    "3": {
+        "task": {
+            "station_id_from": 1111,
+            "station_id_to": 444,
+            "train": "К99",
+            "is_warn_when_kupe": true,
+            "is_warn_when_plac": true
+        }
+    }
+}

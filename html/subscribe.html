@@ -30,8 +30,11 @@
             <div class="form-group">
                 <input class="selectpicker form-control" id="train" placeholder="Номер поезда"> </input>
             </div>
-            <div class="form-group">
-                <input type="checkbox" id="is_report_" >Сообщать, если появились купе </input>
+            <div class="checkbox ">
+                <label><input type="checkbox" id="is_report_kupe"> Сообщать если есть купе</label>
+                <label><input type="checkbox" id="is_report_plac"> Сообщать если есть плацкарт</label>
+                <label><input type="checkbox" id="is_report_low_plac"> Сообщать если есть нижние плацкарт</label>
+                <label><input type="checkbox" id="is_report_high_plac"> Сообщать если есть верхние плацкарт</label>
             </div>
             <div class="form-group">
                 <button type="button" class="btn btn-primary" id="start">Отслеживать</button>

@@ -1,9 +1,29 @@
-function formatDateUZ(date){
-    // return dt(date, "dd.mm.yyyy");
-    var day =  date.substr(0, 2);
-    var month = date.substr(3, 2);
-    var year = date.substr(6, 4);
-    return (new Date(year, month-1, day)).getTime()/1000;
-}
+var subscribe = require('./subscribe');
 
-console.log(formatDateUZ("29.10.2016"));
+subscribe.init();
+
+subscribe.add_edit_subscribe(1, {
+    station_id_from: 1111,
+    station_id_to: 2222,
+    train: 'К99',
+    is_warn_when_kupe: true,
+    is_warn_when_plac: true
+});
+
+subscribe.add_edit_subscribe(1, {
+    station_id_from: 1111,
+    station_id_to: 2223,
+    train: 'К99',
+    is_warn_when_kupe: true,
+    is_warn_when_plac: true
+});
+
+subscribe.add_edit_subscribe(3, {
+    station_id_from: 1111,
+    station_id_to: 444,
+    train: 'К99',
+    is_warn_when_kupe: true,
+    is_warn_when_plac: true
+});
+
+subscribe.debug();
