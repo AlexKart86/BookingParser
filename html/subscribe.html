@@ -31,6 +31,7 @@
                 <input class="selectpicker form-control" id="train" placeholder="Номер поезда"> </input>
             </div>
             <div class="checkbox ">
+                <label><input type="checkbox" id="is_report_all"> Сообщать, если есть хоть что-нибудь</label>
                 <label><input type="checkbox" id="is_report_kupe"> Сообщать если есть купе</label>
                 <label><input type="checkbox" id="is_report_plac"> Сообщать если есть плацкарт</label>
                 <label><input type="checkbox" id="is_report_low_plac"> Сообщать если есть нижние плацкарт</label>
@@ -88,17 +89,40 @@
     };
 
     var start_on_click = function() {
-//        setInterval(function(){
-            Push.create("Hello world!", {
-                body: "How's it hangin'?",
-                requireInteraction: true,
-                //timeout: 30000,
-                onClick: function () {
-                    window.focus();
-                    this.close();
-                }
-            });
-//        }, 2000);
+//            Push.create("Hello world!", {
+//                body: "How's it hangin'?",
+//                requireInteraction: true,
+//                //timeout: 30000,
+//                onClick: function () {
+//                    window.focus();
+//                    this.close();
+//                }
+//            });
+        //Подписываемся
+        var station_from = station_list[$('#station_from').val()];
+        var station_to = station_list[$('#station_to').val()];
+        var dt = $('#dtp_value').val();
+
+        var data = {
+            station_id_from: station_from,
+            station_id_to: station_to,
+            date_dep: dt,
+            train: $('#train').val(),
+            is_report_all: $('#is_report_all').val(),
+            is_report_kupe: $('#is_report_kupe').val(),
+            is_report_plac: $('#is_report_plac').val()
+        };
+        $.ajax({
+            url: "/register_subscribe",
+            method: "POST",
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            dataType: "json",
+            success: function(data){
+                alert(data.task_id);
+            }
+        });
+
 
     };
 

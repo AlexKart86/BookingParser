@@ -1,20 +1,35 @@
 {
-    "1": {
+    "3debe853-96b2-ac66-2149-72cc24d0d0f5": {
         "task": {
-            "station_id_from": 1111,
-            "station_id_to": 2223,
-            "train": "К99",
-            "is_warn_when_kupe": true,
-            "is_warn_when_plac": true
+            "station_id_from": "2208001",
+            "station_id_to": "2218095",
+            "date_dep": "21.10.2016",
+            "train": "22",
+            "is_report_all": "on",
+            "is_report_kupe": "on",
+            "is_report_plac": "on"
         }
     },
-    "3": {
+    "d1661750-1dfc-d0b2-60bb-ebc400d493f5": {
         "task": {
-            "station_id_from": 1111,
-            "station_id_to": 444,
-            "train": "К99",
-            "is_warn_when_kupe": true,
-            "is_warn_when_plac": true
+            "station_id_from": "2200001",
+            "station_id_to": "2218095",
+            "date_dep": "21.10.2016",
+            "train": "22",
+            "is_report_all": "on",
+            "is_report_kupe": "on",
+            "is_report_plac": "on"
+        }
+    },
+    "9180adb4-035f-9c9c-f3f5-fc5b9437ff0f": {
+        "task": {
+            "station_id_from": "2200001",
+            "station_id_to": "2218095",
+            "date_dep": "21.10.2016",
+            "train": "22",
+            "is_report_all": "on",
+            "is_report_kupe": "on",
+            "is_report_plac": "on"
         }
     }
 }

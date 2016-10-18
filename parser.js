@@ -138,6 +138,25 @@ function find_trains(station_id_from, station_id_to, date_dep, token,  callback)
     });
 }
 
+//Поискать поезд по имени на заданные условия отправления
+//Возвращает не только модель и название поезда
+//но и всю колбасню, возвращаемую нам УЗ
+function find_trains_by_num(station_id_from, station_id_to, date_dep, token, train_num, callback){
+    find_trains(station_id_from, station_id_to, date_dep, token, 
+      function(error, data){
+         if (error)
+             callback(error, null);
+         else {
+             //Пробегаемся по всем поездам
+             data.forEach(function(item){
+                if (item.num == train_num){
+                    return item;
+                }
+             });
+         }
+      });
+}
+
 //Return list of places in coach
 function find_places_in_coach(station_id_from, station_id_to, date_dep, train,
                               coach_num, coach_type_id, coach_class, token, callback){
@@ -346,6 +365,7 @@ module.exports.ask_token = ask_token;
 module.exports.find_trains = find_trains;
 module.exports.find_trains_ext = find_trains_ext;
 module.exports.ask_station_list = ask_station_list;
+module.exports.find_trains_by_num = find_trains_by_num;
 
 //for test only
 module.exports.format_date = formatDateUZ;

@@ -3,8 +3,18 @@ var http = require('http');
 var fs = require('fs');
 var path = require('path');
 var config = require('./config');
+var subscribe = require('./subscribe');
 
 
+function guid() {
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+    }
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+        s4() + '-' + s4() + s4() + s4();
+}
 
 
 //Парсит тело запроса
@@ -97,6 +107,18 @@ var server =  http.createServer(function(req, res){
               check_trains_ext(res, body.station_from, body.station_to, body.date);
           });
           break;
+      case '/register_subscribe':
+          parse_body(req, function(body){
+             body = JSON.parse(body);
+             var task_id = guid();
+             subscribe.add_edit_subscribe(task_id, body);
+             res.write(JSON.stringify({
+                 error: null,
+                 task_id: task_id
+             }));
+             res.end();
+          });
+          break;
       default :
           try {
               var file_full_path = path.resolve(__dirname, '.'+req.url);
@@ -130,7 +152,9 @@ function sendFile(res, filename){
     })
 }
 
+subscribe.init();
 server.listen(config.server_port, config.server_ip);
+
 
 /*
 parser.ask_token(function (token) {
