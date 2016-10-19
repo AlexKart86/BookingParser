@@ -105,8 +105,14 @@
                     setTimeout(run_check, 10000);
                 }
                 else {
+                    var body = `Поезд ${data.result.num} \n`;
+                    $.each(data.result.types, function(idx, item){
+                        body += `${item.title}: ${item.places} \n`;
+                    });
+
+
                     Push.create("Найден новый поезд", {
-                        body: JSON.stringify(data),
+                        body: body,
                         requireInteraction: true,
                         onClick: function () {
                                  window.focus();

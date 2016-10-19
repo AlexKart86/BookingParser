@@ -1,3 +1,377 @@
 {
-
+    "73287ec6-bcc2-4a3c-81b6-94a0c06f3295": {
+        "task": {
+            "station_id_from": "2200001",
+            "station_id_to": "2208001",
+            "date_dep": "29.10.2016",
+            "train": "148",
+            "is_report_all": false,
+            "is_report_kupe": false,
+            "is_report_plac": false
+        },
+        "prev_solve": {},
+        "last_change_results": null
+    },
+    "aef7c60c-914a-e048-36e8-456438135d41": {
+        "task": {
+            "station_id_from": "2200001",
+            "station_id_to": "2208001",
+            "date_dep": "29.10.2016",
+            "train": "148К",
+            "is_report_all": false,
+            "is_report_kupe": false,
+            "is_report_plac": false
+        },
+        "prev_solve": {},
+        "last_change_results": null
+    },
+    "47402a92-4a56-80aa-d97f-51f7fdf8071c": {
+        "task": {
+            "station_id_from": "2200001",
+            "station_id_to": "2208001",
+            "date_dep": "29.10.2016",
+            "train": "105К",
+            "is_report_all": false,
+            "is_report_kupe": false,
+            "is_report_plac": false
+        },
+        "prev_solve": {
+            "num": "105К",
+            "model": 0,
+            "category": 0,
+            "travel_time": "9:15",
+            "from": {
+                "station_id": 2200001,
+                "station": "Киев-Пассажирский",
+                "date": 1477764180,
+                "src_date": "2016-10-29 21:03:00"
+            },
+            "till": {
+                "station_id": 2208001,
+                "station": "Одесса-Главная",
+                "date": 1477801080,
+                "src_date": "2016-10-30 06:18:00"
+            },
+            "types": [
+                {
+                    "title": "Люкс",
+                    "letter": "Л",
+                    "places": 26
+                },
+                {
+                    "title": "Купе",
+                    "letter": "К",
+                    "places": 48
+                }
+            ]
+        },
+        "last_change_results": "2016-10-19T20:57:21.574Z"
+    },
+    "fbe76936-3e81-3e60-1e72-5225724654ad": {
+        "task": {
+            "station_id_from": "2200001",
+            "station_id_to": "2208001",
+            "date_dep": "29.10.2016",
+            "train": "105К",
+            "is_report_all": false,
+            "is_report_kupe": false,
+            "is_report_plac": false
+        },
+        "prev_solve": {
+            "num": "105К",
+            "model": 0,
+            "category": 0,
+            "travel_time": "9:15",
+            "from": {
+                "station_id": 2200001,
+                "station": "Киев-Пассажирский",
+                "date": 1477764180,
+                "src_date": "2016-10-29 21:03:00"
+            },
+            "till": {
+                "station_id": 2208001,
+                "station": "Одесса-Главная",
+                "date": 1477801080,
+                "src_date": "2016-10-30 06:18:00"
+            },
+            "types": [
+                {
+                    "title": "Люкс",
+                    "letter": "Л",
+                    "places": 26
+                },
+                {
+                    "title": "Купе",
+                    "letter": "К",
+                    "places": 48
+                }
+            ]
+        },
+        "last_change_results": "2016-10-19T21:00:25.394Z"
+    },
+    "cfc6825f-37fb-d3b8-5876-80f3f2c0f1f9": {
+        "task": {
+            "station_id_from": "2200001",
+            "station_id_to": "2208001",
+            "date_dep": "28.10.2016",
+            "train": "105К",
+            "is_report_all": false,
+            "is_report_kupe": false,
+            "is_report_plac": false
+        },
+        "prev_solve": {
+            "num": "105К",
+            "model": 0,
+            "category": 0,
+            "travel_time": "9:15",
+            "from": {
+                "station_id": 2200001,
+                "station": "Киев-Пассажирский",
+                "date": 1477677780,
+                "src_date": "2016-10-28 21:03:00"
+            },
+            "till": {
+                "station_id": 2208001,
+                "station": "Одесса-Главная",
+                "date": 1477711080,
+                "src_date": "2016-10-29 06:18:00"
+            },
+            "types": [
+                {
+                    "title": "Люкс",
+                    "letter": "Л",
+                    "places": 16
+                },
+                {
+                    "title": "Купе",
+                    "letter": "К",
+                    "places": 32
+                }
+            ]
+        },
+        "last_change_results": "2016-10-19T21:09:42.470Z"
+    },
+    "51c689a6-9fd3-8488-4e68-45262fe68bda": {
+        "task": {
+            "station_id_from": "2200001",
+            "station_id_to": "2208001",
+            "date_dep": "28.10.2016",
+            "train": "105К",
+            "is_report_all": false,
+            "is_report_kupe": false,
+            "is_report_plac": false
+        },
+        "prev_solve": {
+            "num": "105К",
+            "model": 0,
+            "category": 0,
+            "travel_time": "9:15",
+            "from": {
+                "station_id": 2200001,
+                "station": "Киев-Пассажирский",
+                "date": 1477677780,
+                "src_date": "2016-10-28 21:03:00"
+            },
+            "till": {
+                "station_id": 2208001,
+                "station": "Одесса-Главная",
+                "date": 1477711080,
+                "src_date": "2016-10-29 06:18:00"
+            },
+            "types": [
+                {
+                    "title": "Люкс",
+                    "letter": "Л",
+                    "places": 16
+                },
+                {
+                    "title": "Купе",
+                    "letter": "К",
+                    "places": 32
+                }
+            ]
+        },
+        "last_change_results": "2016-10-19T21:10:38.134Z"
+    },
+    "c0d959b7-cbb0-be4e-518d-ccf10bfd8d18": {
+        "task": {
+            "station_id_from": "2200001",
+            "station_id_to": "2208001",
+            "date_dep": "28.10.2016",
+            "train": "105К",
+            "is_report_all": false,
+            "is_report_kupe": false,
+            "is_report_plac": false
+        },
+        "prev_solve": {
+            "num": "105К",
+            "model": 0,
+            "category": 0,
+            "travel_time": "9:15",
+            "from": {
+                "station_id": 2200001,
+                "station": "Киев-Пассажирский",
+                "date": 1477677780,
+                "src_date": "2016-10-28 21:03:00"
+            },
+            "till": {
+                "station_id": 2208001,
+                "station": "Одесса-Главная",
+                "date": 1477711080,
+                "src_date": "2016-10-29 06:18:00"
+            },
+            "types": [
+                {
+                    "title": "Люкс",
+                    "letter": "Л",
+                    "places": 16
+                },
+                {
+                    "title": "Купе",
+                    "letter": "К",
+                    "places": 32
+                }
+            ]
+        },
+        "last_change_results": "2016-10-19T21:12:12.602Z"
+    },
+    "339cfbd9-9b70-af69-3fe1-28f048b33a2d": {
+        "task": {
+            "station_id_from": "2200001",
+            "station_id_to": "2208001",
+            "date_dep": "28.10.2016",
+            "train": "105К",
+            "is_report_all": false,
+            "is_report_kupe": false,
+            "is_report_plac": false
+        },
+        "prev_solve": {
+            "num": "105К",
+            "model": 0,
+            "category": 0,
+            "travel_time": "9:15",
+            "from": {
+                "station_id": 2200001,
+                "station": "Киев-Пассажирский",
+                "date": 1477677780,
+                "src_date": "2016-10-28 21:03:00"
+            },
+            "till": {
+                "station_id": 2208001,
+                "station": "Одесса-Главная",
+                "date": 1477711080,
+                "src_date": "2016-10-29 06:18:00"
+            },
+            "types": [
+                {
+                    "title": "Люкс",
+                    "letter": "Л",
+                    "places": 16
+                },
+                {
+                    "title": "Купе",
+                    "letter": "К",
+                    "places": 32
+                }
+            ]
+        },
+        "last_change_results": "2016-10-19T21:13:26.104Z"
+    },
+    "615666f5-560d-a3e9-3bca-19e4886be719": {
+        "task": {
+            "station_id_from": "2200001",
+            "station_id_to": "2208001",
+            "date_dep": "28.10.2016",
+            "train": "105К",
+            "is_report_all": false,
+            "is_report_kupe": false,
+            "is_report_plac": false
+        },
+        "prev_solve": {
+            "num": "105К",
+            "model": 0,
+            "category": 0,
+            "travel_time": "9:15",
+            "from": {
+                "station_id": 2200001,
+                "station": "Киев-Пассажирский",
+                "date": 1477677780,
+                "src_date": "2016-10-28 21:03:00"
+            },
+            "till": {
+                "station_id": 2208001,
+                "station": "Одесса-Главная",
+                "date": 1477711080,
+                "src_date": "2016-10-29 06:18:00"
+            },
+            "types": [
+                {
+                    "title": "Люкс",
+                    "letter": "Л",
+                    "places": 16
+                },
+                {
+                    "title": "Купе",
+                    "letter": "К",
+                    "places": 32
+                }
+            ]
+        },
+        "last_change_results": "2016-10-19T21:14:29.910Z"
+    },
+    "48452b3a-82ce-9468-58ac-4abc9d2debe5": {
+        "task": {
+            "station_id_from": "2200001",
+            "station_id_to": "2208001",
+            "date_dep": "28.10.2016",
+            "train": "105К",
+            "is_report_all": false,
+            "is_report_kupe": false,
+            "is_report_plac": false
+        },
+        "prev_solve": {
+            "num": "105К",
+            "model": 0,
+            "category": 0,
+            "travel_time": "9:15",
+            "from": {
+                "station_id": 2200001,
+                "station": "Киев-Пассажирский",
+                "date": 1477677780,
+                "src_date": "2016-10-28 21:03:00"
+            },
+            "till": {
+                "station_id": 2208001,
+                "station": "Одесса-Главная",
+                "date": 1477711080,
+                "src_date": "2016-10-29 06:18:00"
+            },
+            "types": [
+                {
+                    "title": "Люкс",
+                    "letter": "Л",
+                    "places": 16
+                },
+                {
+                    "title": "Купе",
+                    "letter": "К",
+                    "places": 32
+                }
+            ]
+        },
+        "last_change_results": "2016-10-19T21:14:57.113Z"
+    },
+    "25a3fef0-357a-9c8f-6e28-704266aab7ee": {
+        "task": {
+            "station_id_from": "2200001",
+            "station_id_to": "2208001",
+            "date_dep": "28.10.2016",
+            "train": "105К",
+            "is_report_all": false,
+            "is_report_kupe": false,
+            "is_report_plac": false
+        },
+        "prev_solve": {},
+        "last_change_results": null
+    }
 }
