@@ -118,7 +118,7 @@
             //Обрабатываем ошибку 400
             statusCode: {
                 400: function(error){
-                    $('#upd_time').html(error);
+                    $('#upd_time').html(error.responseText);
                     setTimeout(run_check, 10000);
                 }
             }

@@ -32,7 +32,7 @@ function handle_errors(error, res){
     if (error){
         res.statusCode = 400;
         console.error(error.stack + '\n' +  error.message);
-        res.body = error.message;
+        res.write(error.message);
         res.end();
         return false;
     }
