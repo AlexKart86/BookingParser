@@ -40,6 +40,8 @@
             <div class="form-group">
                 <button type="button" class="btn btn-primary" id="start">Отслеживать</button>
             </div>
+            <div class="has-success">Обновлено: <span class="success" id="upd_time"></span></div>
+            <div class="has-success">Текст ошибки: <span class="error" id="error_text"></span></div>
         </form>
     </div>
 </div>
@@ -69,6 +71,7 @@
 
 <script>
     var station_list = {};
+    var task_id = "";
 
     var load_station_list = function(query, syncResult, asyncResult){
         $.ajax({
@@ -87,6 +90,40 @@
             }
         })
     };
+
+    function run_check(){
+        $.ajax({
+            url: "/run_task",
+            method: "POST",
+            data: JSON.stringify({task_id: task_id}),
+            contentType: 'application/json',
+            dataType: "json",
+            success: function(data) {
+                $('#upd_time').html(new Date().toLocaleTimeString());
+                if ( data.result.length == 0 )
+                {
+                    setTimeout(run_check, 10000);
+                }
+                else {
+                    Push.create("Найден новый поезд", {
+                        body: JSON.stringify(data),
+                        requireInteraction: true,
+                        onClick: function () {
+                                 window.focus();
+                                 this.close();
+                                }
+                    });
+                }
+            },
+            //Обрабатываем ошибку 400
+            statusCode: {
+                400: function(error){
+                    $('#upd_time').html(error);
+                    setTimeout(run_check, 10000);
+                }
+            }
+            });
+    }
 
     var start_on_click = function() {
 //            Push.create("Hello world!", {
@@ -108,9 +145,9 @@
             station_id_to: station_to,
             date_dep: dt,
             train: $('#train').val(),
-            is_report_all: $('#is_report_all').val(),
-            is_report_kupe: $('#is_report_kupe').val(),
-            is_report_plac: $('#is_report_plac').val()
+            is_report_all: $('#is_report_all').prop('checked'),
+            is_report_kupe: $('#is_report_kupe').prop('checked'),
+            is_report_plac: $('#is_report_plac').prop('checked')
         };
         $.ajax({
             url: "/register_subscribe",
@@ -119,7 +156,8 @@
             contentType: 'application/json',
             dataType: "json",
             success: function(data){
-                alert(data.task_id);
+                task_id = data.task_id;
+                run_check();
             }
         });
 

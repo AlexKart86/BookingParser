@@ -119,6 +119,19 @@ var server =  http.createServer(function(req, res){
              res.end();
           });
           break;
+      case '/run_task':
+          parse_body(req, function(body){
+              body = JSON.parse(body);
+              subscribe.run_task(body.task_id, function(error, data){
+                  if (!handle_errors(error, res)) return;
+                  res.write(JSON.stringify({
+                      last_modified: data.last_change_results,
+                      result: data.prev_solve
+                  }));
+                  res.end();
+              })
+          });
+          break;
       default :
           try {
               var file_full_path = path.resolve(__dirname, '.'+req.url);

@@ -144,15 +144,20 @@ function find_trains(station_id_from, station_id_to, date_dep, token,  callback)
 function find_trains_by_num(station_id_from, station_id_to, date_dep, token, train_num, callback){
     find_trains(station_id_from, station_id_to, date_dep, token, 
       function(error, data){
+         var is_train_found = false;
          if (error)
              callback(error, null);
          else {
              //Пробегаемся по всем поездам
              data.forEach(function(item){
-                if (item.num == train_num){
-                    return item;
+                if (item.num == train_num) {
+                    is_train_found = true;
+                    callback(null, item);
+                    return;
                 }
              });
+             if (!is_train_found)
+               callback(new Error("Поездов не найдено"), null);
          }
       });
 }
