@@ -211,6 +211,7 @@ function run_task(task_id, callback){
         if (solution.length == 0)
           return;
 
+        //TOdo тут бага
         var task = task_item.task;
         solve.num = task.num;
         solve.types = task.types;
