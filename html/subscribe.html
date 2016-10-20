@@ -14,16 +14,16 @@
     <div class="row vertical-center-row">
         <form>
             <div class="form-group">
-               <input class="selectpicker form-control" id="station_from" placeholder="Станция отправления"> </input>
+               <input class="selectpicker form-control" id="station_from" required placeholder="Станция отправления"> </input>
             </div>
             <div class="form-group">
-                <input class="selectpicker form-control" id="station_to" placeholder="Станция назначения"> </input>
+                <input class="selectpicker form-control" id="station_to" required placeholder="Станция назначения"> </input>
             </div>
             <div class="form-group">
 
                 <!--<label for="dtp">Дата</label>-->
                 <div class="input-group date" id="dtp">
-                    <input type="text" class="form-control" id="dtp_value" placeholder="Дата отправления"><span class="input-group-addon">
+                    <input type="text" class="form-control required" id="dtp_value" required placeholder="Дата отправления"><span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
             </div>
@@ -34,14 +34,16 @@
                 <label><input type="checkbox" id="is_report_all"> Сообщать, если есть хоть что-нибудь</label>
                 <label><input type="checkbox" id="is_report_kupe"> Сообщать если есть купе</label>
                 <label><input type="checkbox" id="is_report_plac"> Сообщать если есть плацкарт</label>
-                <label><input type="checkbox" id="is_report_low_plac"> Сообщать если есть нижние плацкарт</label>
-                <label><input type="checkbox" id="is_report_high_plac"> Сообщать если есть верхние плацкарт</label>
+                <label><input type="checkbox" id="is_cycle_analyze">Сообщать об изменениях с количеством мест</label>
+
+                <!--<label><input type="checkbox" id="is_report_low_plac"> Сообщать если есть нижние плацкарт</label>-->
+                <!--<label><input type="checkbox" id="is_report_high_plac"> Сообщать если есть верхние плацкарт</label>-->
             </div>
             <div class="form-group">
                 <button type="button" class="btn btn-primary" id="start">Отслеживать</button>
             </div>
-            <div class="has-success">Обновлено: <span class="success" id="upd_time"></span></div>
-            <div class="has-success">Текст ошибки: <span class="error" id="error_text"></span></div>
+            <div class="container"><span class="label label-primary" id="upd_time"></span></div>
+            <div class="container"><span class="label label-danger" id="error"></span> </div>
         </form>
     </div>
 </div>
@@ -72,6 +74,7 @@
 <script>
     var station_list = {};
     var task_id = "";
+    var last_modified = null;
 
     var load_station_list = function(query, syncResult, asyncResult){
         $.ajax({
@@ -99,7 +102,9 @@
             contentType: 'application/json',
             dataType: "json",
             success: function(data) {
+                alert('SUCCESS!!!!');
                 $('#upd_time').html(new Date().toLocaleTimeString());
+                $('#error').hide();
                 if ( data.result.length == 0 )
                 {
                     setTimeout(run_check, 10000);
@@ -110,21 +115,27 @@
                         body += `${item.title}: ${item.places} \n`;
                     });
 
+                    if (last_modified != data.last_modified)
+                    {
+                        Push.create("Беги за билетами", {
+                            body: body,
+                            requireInteraction: true,
+                            onClick: function () {
+                                window.focus();
+                                this.close();
+                            }
+                        });
 
-                    Push.create("Найден новый поезд", {
-                        body: body,
-                        requireInteraction: true,
-                        onClick: function () {
-                                 window.focus();
-                                 this.close();
-                                }
-                    });
+                    }
                 }
             },
+//            error: function(xhr, text){
+//                alert(JSON.stringify(xhr));
+//            },
             //Обрабатываем ошибку 400
             statusCode: {
                 400: function(error){
-                    $('#upd_time').html(error.responseText);
+                    $('#error').show().html(error.responseText);
                     setTimeout(run_check, 10000);
                 }
             }

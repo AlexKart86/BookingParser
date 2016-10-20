@@ -111,7 +111,7 @@ var server =  http.createServer(function(req, res){
           parse_body(req, function(body){
              body = JSON.parse(body);
              var task_id = guid();
-             subscribe.add_edit_subscribe(task_id, body);
+             task_id = subscribe.add_edit_subscribe(task_id, body);
              res.write(JSON.stringify({
                  error: null,
                  task_id: task_id

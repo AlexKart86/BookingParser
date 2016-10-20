@@ -1,17 +1,17 @@
 var config = {};
 
 //for NDI PIT
-//config.is_use_proxy = true;
-//config.server_ip = '192.168.1.40';
-//config.server_port = 2233;
-//config.proxy_port = 3128;
-//config.proxy_host = 'http://proxy.ndipit.com.ua';
+config.is_use_proxy = true;
+config.server_ip = '192.168.1.40';
+config.server_port = 2233;
+config.proxy_port = 3128;
+config.proxy_host = 'http://proxy.ndipit.com.ua';
 
 //for home
 
- config.is_use_proxy = false;
- config.server_ip = 'localhost';
- config.server_port = 2233;
+ // config.is_use_proxy = false;
+ // config.server_ip = 'localhost';
+ // config.server_port = 2233;
 
 
 
