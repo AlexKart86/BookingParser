@@ -102,10 +102,9 @@
             contentType: 'application/json',
             dataType: "json",
             success: function(data) {
-                alert('SUCCESS!!!!');
                 $('#upd_time').html(new Date().toLocaleTimeString());
                 $('#error').hide();
-                if ( data.result.length == 0 )
+                if ( Object.getOwnPropertyNames(data.result).length == 0 )
                 {
                     setTimeout(run_check, 10000);
                 }
@@ -128,6 +127,9 @@
 
                     }
                 }
+                last_modified = data.last_modified;
+                if ($('#is_cycle_analyze').prop('checked'))
+                  setTimeout(run_check, 10000);
             },
 //            error: function(xhr, text){
 //                alert(JSON.stringify(xhr));

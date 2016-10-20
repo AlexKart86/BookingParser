@@ -1,15 +1,44 @@
 {
-    "757af144-6389-7d3e-e006-09084f12e838": {
+    "084882dc-64cf-0ef2-b3b8-8d2ce259bf14": {
         "task": {
             "station_id_from": "2200001",
             "station_id_to": "2218000",
             "date_dep": "28.10.2016",
             "train": "141К",
             "is_report_all": false,
-            "is_report_kupe": false,
-            "is_report_plac": true
+            "is_report_kupe": true,
+            "is_report_plac": false
         },
-        "prev_solve": {},
-        "last_change_results": null
+        "prev_solve": {
+            "num": "141К",
+            "model": 0,
+            "category": 0,
+            "travel_time": "12:56",
+            "from": {
+                "station_id": 2200001,
+                "station": "Киев-Пассажирский",
+                "date": 1477658640,
+                "src_date": "2016-10-28 15:44:00"
+            },
+            "till": {
+                "station_id": 2218000,
+                "station": "Львов",
+                "date": 1477705200,
+                "src_date": "2016-10-29 04:40:00"
+            },
+            "types": [
+                {
+                    "title": "Люкс",
+                    "letter": "Л",
+                    "places": 4
+                },
+                {
+                    "title": "Купе",
+                    "letter": "К",
+                    "places": 34
+                }
+            ]
+        },
+        "last_change_results": "2016-10-20T21:03:07.552Z"
     }
 }

@@ -213,8 +213,8 @@ function run_task(task_id, callback){
 
         //TOdo тут бага
         var task = task_item.task;
-        solve.num = task.num;
-        solve.types = task.types;
+        solve.num = solution.num;
+        solve.types = solution.types;
 
         var v_is_solution_found = false;
         if (task.is_report_all){
