@@ -211,7 +211,6 @@ function run_task(task_id, callback){
         if (solution.length == 0)
           return;
 
-        //TOdo тут бага
         var task = task_item.task;
         solve.num = solution.num;
         solve.types = solution.types;
@@ -222,9 +221,21 @@ function run_task(task_id, callback){
         }
         else {
             solve.types.forEach(function(item){
+                //Сообщать если появились купе
                 if (task.is_report_kupe && item.title == "Купе")
                     v_is_solution_found = true;
+                //Сообщать, если появились плацкарты
                 if (task.is_report_plac && item.title == "Плацкарт")
+                    v_is_solution_found = true;
+                //Сообщать если плацкартов стало меньше чем
+                if (item.title == "Плацкарт" &&
+                    task.is_report_less_plac &&
+                    parseInt(item.places) <= parseInt(task.cnt_less_plac) )
+                    v_is_solution_found = true;
+                //Сообщать если плацкартов больше чем
+                if (item.title == "Плацкарт" &&
+                    task.is_report_greatest_plac &&
+                    parseInt(item.places) >= parseInt(task.cnt_greatest_plac) )
                     v_is_solution_found = true;
                 if (v_is_solution_found)
                     return;
@@ -232,8 +243,8 @@ function run_task(task_id, callback){
         }
         if (v_is_solution_found)
         {
-            if (!deepCompare(task_item.prev_solve, solution)){
-                task_item.prev_solve = solution;
+            if (!deepCompare(task_item.prev_solve, solve)){
+                task_item.prev_solve = solve;
                 task_item.last_change_results = new Date();
             }
         }

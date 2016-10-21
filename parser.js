@@ -9,6 +9,13 @@ var jjencode = require('./jjencode');
 var config = require('./config.js');
 var util = require('util');
 
+function isIterable(obj) {
+    // checks for null and undefined
+    if (obj == null) {
+        return false;
+    }
+    return typeof obj[Symbol.iterator] === 'function';
+}
 
 function BookingAnswerError(message){
     this.message = message;
@@ -149,13 +156,14 @@ function find_trains_by_num(station_id_from, station_id_to, date_dep, token, tra
              callback(error, null);
          else {
              //Пробегаемся по всем поездам
-             data.forEach(function(item){
-                if (item.num == train_num) {
-                    is_train_found = true;
-                    callback(null, item);
-                    return;
-                }
-             });
+             if (isIterable(data))
+                 data.forEach(function(item){
+                    if (item.num == train_num) {
+                        is_train_found = true;
+                        callback(null, item);
+                        return;
+                    }
+                 });
              if (!is_train_found)
                callback(new Error("Поездов не найдено"), null);
          }
@@ -290,7 +298,12 @@ function find_trains_ext(station_id_from, station_id_to, date_dep, token, callba
            callback(err, null);
            return;
         }
-
+       
+       if (!isIterable(trains)){
+           callback(new BookingAnswerError("УЗ вернула пустой список поездов"), null);
+           return;
+       } 
+         
        //Пробегаемся по всем поездам
        var train_promises = [];
        trains.forEach(function(item){

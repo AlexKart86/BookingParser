@@ -35,16 +35,22 @@
                 <label><input type="checkbox" id="is_report_kupe"> Сообщать если есть купе</label>
                 <label><input type="checkbox" id="is_report_plac"> Сообщать если есть плацкарт</label>
                 <label><input type="checkbox" id="is_cycle_analyze">Сообщать об изменениях с количеством мест</label>
+                <label><input type="checkbox" id="is_report_less_plac">Сообщить, если плацкартов стало меньше, чем
+                    <input type="number" id="cnt_less_plac" placeholder="Мин. плацкартов"> </label>
+                <label><input type="checkbox" id="is_report_greatest_plac">Сообщить, если плацкартов стало больше, чем
+                    <input type="number" id="cnt_greatest_plac" placeholder="Макс. плацкартов"> </label>
 
-                <!--<label><input type="checkbox" id="is_report_low_plac"> Сообщать если есть нижние плацкарт</label>-->
-                <!--<label><input type="checkbox" id="is_report_high_plac"> Сообщать если есть верхние плацкарт</label>-->
+                <label><input type="checkbox" id="is_report_low_plac"> Сообщать если есть нижние плацкарт</label>
+                <label><input type="checkbox" id="is_report_high_plac"> Сообщать если есть верхние плацкарт</label>
+                <label><input type="checkbox" id="is_report_full_kupe_4"> Сообщать, если есть полное купе в плацкарте (4 места) </label>
+                <label><input type="checkbox" id="is_report_full_kupe_6"> Сообщать, если есть полное купе + боковушки (6 мест) </label>
             </div>
             <div class="form-group">
                 <button type="button" class="btn btn-primary" id="start">Отслеживать</button>
             </div>
-            <div class="container"><span class="label label-primary" id="upd_time"></span></div>
-            <div class="container"><span class="label label-danger" id="error"></span> </div>
         </form>
+        <div class="container"><span class="label label-primary" id="upd_time"></span></div>
+        <div class="container"><span class="label label-danger" id="error"></span> </div>
     </div>
 </div>
 <script src="bower_components/moment/min/moment-with-locales.min.js"></script>
@@ -94,6 +100,10 @@
         })
     };
 
+    function refresh_upd_time(){
+        $('#upd_time').html('Обновлено: ' + new Date().toLocaleTimeString());
+    }
+
     function run_check(){
         $.ajax({
             url: "/run_task",
@@ -102,7 +112,7 @@
             contentType: 'application/json',
             dataType: "json",
             success: function(data) {
-                $('#upd_time').html(new Date().toLocaleTimeString());
+                refresh_upd_time();
                 $('#error').hide();
                 if ( Object.getOwnPropertyNames(data.result).length == 0 )
                 {
@@ -137,7 +147,8 @@
             //Обрабатываем ошибку 400
             statusCode: {
                 400: function(error){
-                    $('#error').show().html(error.responseText);
+                    refresh_upd_time();
+                    $('#error').show().html("Ошибка: " + error.responseText);
                     setTimeout(run_check, 10000);
                 }
             }
@@ -166,7 +177,15 @@
             train: $('#train').val(),
             is_report_all: $('#is_report_all').prop('checked'),
             is_report_kupe: $('#is_report_kupe').prop('checked'),
-            is_report_plac: $('#is_report_plac').prop('checked')
+            is_report_plac: $('#is_report_plac').prop('checked'),
+            is_report_less_plac: $('#is_report_less_plac').prop('checked'),
+            cnt_less_plac: $('#cnt_less_plac').val(),
+            is_report_greatest_plac: $('#is_report_greatest_plac').prop('checked'),
+            cnt_greatest_plac: $('#cnt_greatest_plac').val(),
+            is_report_low_plac: $('#is_report_low_plac').prop('checked'),
+            is_report_high_plac: $('#is_report_high_plac').prop('checked'),
+            is_report_full_kupe_4: $('#is_report_full_kupe_4').prop('checked'),
+            is_report_full_kupe_6: $('#is_report_full_kupe_6').prop('checked')
         };
         $.ajax({
             url: "/register_subscribe",
@@ -197,6 +216,9 @@
             display: 'title'
         });
         $('#start').on('click', start_on_click);
+        //Спрашиваем у юзера разрешения срать ему пуш уведомлениями
+        Push.Permission.request();
+
     });
 </script>
 
