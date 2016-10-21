@@ -19,5 +19,87 @@
         },
         "prev_solve": {},
         "last_change_results": null
+    },
+    "c1c558a8-3d7f-3ef6-629f-eba433994292": {
+        "task": {
+            "station_id_from": "2200001",
+            "station_id_to": "2208001",
+            "date_dep": "28.10.2016",
+            "train": "243К",
+            "is_report_all": false,
+            "is_report_kupe": false,
+            "is_report_plac": false,
+            "is_report_less_plac": true,
+            "cnt_less_plac": "16",
+            "is_report_greatest_plac": false,
+            "cnt_greatest_plac": "",
+            "is_report_low_plac": false,
+            "is_report_high_plac": false,
+            "is_report_full_kupe_4": false,
+            "is_report_full_kupe_6": false
+        },
+        "prev_solve": {},
+        "last_change_results": null
+    },
+    "c1b9f98c-b773-8a11-2bc6-191030eb4ddf": {
+        "task": {
+            "station_id_from": "2200001",
+            "station_id_to": "2208001",
+            "date_dep": "28.10.2016",
+            "train": "243К",
+            "is_report_all": false,
+            "is_report_kupe": false,
+            "is_report_plac": false,
+            "is_report_less_plac": true,
+            "cnt_less_plac": "15",
+            "is_report_greatest_plac": false,
+            "cnt_greatest_plac": "",
+            "is_report_low_plac": false,
+            "is_report_high_plac": false,
+            "is_report_full_kupe_4": false,
+            "is_report_full_kupe_6": false
+        },
+        "prev_solve": {},
+        "last_change_results": null
+    },
+    "7d4753ee-46bb-9d71-a003-be9a2e31737e": {
+        "task": {
+            "station_id_from": "2200001",
+            "station_id_to": "2208001",
+            "date_dep": "05.11.2016",
+            "train": "243К",
+            "is_report_all": false,
+            "is_report_kupe": false,
+            "is_report_plac": false,
+            "is_report_less_plac": true,
+            "cnt_less_plac": "18",
+            "is_report_greatest_plac": false,
+            "cnt_greatest_plac": "",
+            "is_report_low_plac": false,
+            "is_report_high_plac": false,
+            "is_report_full_kupe_4": false,
+            "is_report_full_kupe_6": false
+        },
+        "prev_solve": {
+            "num": "243К",
+            "types": [
+                {
+                    "title": "Люкс",
+                    "letter": "Л",
+                    "places": 18
+                },
+                {
+                    "title": "Купе",
+                    "letter": "К",
+                    "places": 24
+                },
+                {
+                    "title": "Плацкарт",
+                    "letter": "П",
+                    "places": 17
+                }
+            ]
+        },
+        "last_change_results": "2016-10-21T10:01:05.818Z"
     }
 }
