@@ -291,6 +291,36 @@ function find_coaches(station_id_from, station_id_to, date_dep, train, model,
 
 }
 
+function lookup_places(station_id_from, station_id_to, date_dep, train, model,
+                       token, callback, filter_letter = null){
+    var train_promises = [];
+    var vagon_types = train.types;
+    vagon_types.forEach(function (vagon_type) {
+        if (!filter_letter || vagon_type.letter == filter_letter){
+            var f = function () {
+                var p = new Promise(function (resolve, reject) {
+                    find_coaches(station_id_from, station_id_to, date_dep,
+                        train, model, vagon_type.letter, token, function (error, data) {
+                            if (error)
+                                reject(error);
+                            else
+                                resolve(data);
+                        });
+                });
+                p.then(function (data) {
+                    vagon_type.place_detail = data;
+                });
+                return p;
+            };
+            promise_arr.push(f());
+        }
+    });
+    Promise.all(promise_arr)
+        .then(
+            success => callback(null, vagon_types),
+            error =>  callback(error, null));
+}
+
 //find trains with seats detail
 function find_trains_ext(station_id_from, station_id_to, date_dep, token, callback){
     find_trains(station_id_from, station_id_to, date_dep, token, function (err, trains) {
@@ -305,6 +335,7 @@ function find_trains_ext(station_id_from, station_id_to, date_dep, token, callba
        } 
          
        //Пробегаемся по всем поездам
+       //Todo переписать через lookup_places
        var train_promises = [];
        trains.forEach(function(item){
           var f_train = function() {
@@ -384,6 +415,8 @@ module.exports.find_trains = find_trains;
 module.exports.find_trains_ext = find_trains_ext;
 module.exports.ask_station_list = ask_station_list;
 module.exports.find_trains_by_num = find_trains_by_num;
+module.exports.find_coaches = find_coaches;
+module.exports.lookup_places = lookup_places;
 
 //for test only
 module.exports.format_date = formatDateUZ;
