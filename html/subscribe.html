@@ -35,6 +35,7 @@
                 <label><input type="checkbox" id="is_report_kupe"> Сообщать если есть купе</label>
                 <label><input type="checkbox" id="is_report_plac"> Сообщать если есть плацкарт</label>
                 <label><input type="checkbox" id="is_cycle_analyze">Сообщать об изменениях с количеством мест</label>
+                <label><input type="checkbox" id="is_infinite_loop">Долбить без остановки если что-то нашлось</label>
                 <label><input type="checkbox" id="is_report_less_plac">Сообщить, если плацкартов стало меньше, чем
                     <input type="number" id="cnt_less_plac" placeholder="Мин. плацкартов"> </label>
                 <label><input type="checkbox" id="is_report_greatest_plac">Сообщить, если плацкартов стало больше, чем
@@ -125,7 +126,8 @@
                         body += `${item.title}: ${item.places} \n`;
                     });
 
-                    if (last_modified != data.last_modified)
+                    if (last_modified != data.last_modified ||
+                            $('#is_infinite_loop').prop('checked'))
                     {
                         Push.create("Беги за билетами", {
                             body: body,
@@ -139,8 +141,8 @@
                     }
                 }
                 last_modified = data.last_modified;
-                if ($('#is_cycle_analyze').prop('checked')){
-                  setTimeout(run_check, 10000);
+                if ($('#is_cycle_analyze').prop('checked') || $('#is_infinite_loop').prop('checked')){
+                  setTimeout(run_check, 30000);
                   return;
                 }
             },
@@ -152,7 +154,7 @@
                 400: function(error){
                     refresh_upd_time();
                     $('#error').show().html("Ошибка: " + error.responseText);
-                    setTimeout(run_check, 10000);
+                    setTimeout(run_check, 30000);
                 }
             }
             });

@@ -237,7 +237,7 @@ function run_task(task_id, callback){
                     task.is_report_greatest_plac &&
                     parseInt(item.places) >= parseInt(task.cnt_greatest_plac) )
                     v_is_solution_found = true;
-                if (!v_is_solution_found && is_need_lookup_for_places()){
+                if (!v_is_solution_found && is_need_lookup_for_places(task_item)){
                     console.log(solution);
                 }
                 if (v_is_solution_found)
@@ -254,11 +254,11 @@ function run_task(task_id, callback){
 
     }
 
-    function is_need_lookup_for_places(){
+    function is_need_lookup_for_places(task_item ){
         "use strict";
         let task = task_item.task;
         return task.is_report_full_kupe_4 || task.is_report_full_kupe_6 ||
-               task.is_report_greatest_plac || task.is_report_high_plac;
+               task.is_report_low_plac || task.is_report_high_plac;
 
     }
 
@@ -284,16 +284,22 @@ function run_task(task_id, callback){
                           if (data == null)
                               callback(null, null);
                           else{
-                              if (is_need_lookup_for_places()){
+                              if (is_need_lookup_for_places(subscribe_list[task_id])){
                                   var promise_arr = [];
 
                                   parser.lookup_places(task_info.station_id_from, task_info.station_id_to,
-                                      task_info.date_dep, data.num, data.model, token,
-                                  function(){
+                                      task_info.date_dep, data, token,
+                                  function(error, places_info){
                                       "use strict";
-                                      analyze_solution(data, subscribe_list[task_id]);
-                                      save_db();
-                                      callback(null, subscribe_list[task_id]);
+                                      if (error)
+                                          callback(error, null);
+                                      else{
+                                          console.log(places_info);
+                                          
+                                          analyze_solution(data, subscribe_list[task_id]);
+                                          save_db();
+                                          callback(null, subscribe_list[task_id]);
+                                      }
                                   }, 'П');
                               }
                               analyze_solution(data, subscribe_list[task_id]);

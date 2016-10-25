@@ -291,8 +291,8 @@ function find_coaches(station_id_from, station_id_to, date_dep, train, model,
 
 }
 
-function lookup_places(station_id_from, station_id_to, date_dep, train, model,
-                       token, callback, filter_letter = null){
+function lookup_places(station_id_from, station_id_to, date_dep, train,
+                       token, callback, filter_letter){
     var train_promises = [];
     var vagon_types = train.types;
     vagon_types.forEach(function (vagon_type) {
@@ -300,7 +300,7 @@ function lookup_places(station_id_from, station_id_to, date_dep, train, model,
             var f = function () {
                 var p = new Promise(function (resolve, reject) {
                     find_coaches(station_id_from, station_id_to, date_dep,
-                        train, model, vagon_type.letter, token, function (error, data) {
+                        train.num, train.model, vagon_type.letter, token, function (error, data) {
                             if (error)
                                 reject(error);
                             else
@@ -312,10 +312,10 @@ function lookup_places(station_id_from, station_id_to, date_dep, train, model,
                 });
                 return p;
             };
-            promise_arr.push(f());
+            train_promises.push(f());
         }
     });
-    Promise.all(promise_arr)
+    Promise.all(train_promises)
         .then(
             success => callback(null, vagon_types),
             error =>  callback(error, null));
