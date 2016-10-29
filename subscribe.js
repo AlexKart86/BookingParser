@@ -188,6 +188,8 @@ function add_edit_subscribe(task_id, task){
     // subscribe_list[task_id].is_running = false;
     // subscribe_list[task_id].is_solution_found = false;
     subscribe_list[task_id].prev_solve = {};
+    //Текстовое описалово с тем, что мы нашли
+    subscribe_list[task_id].prev_solve_txt = "";
     subscribe_list[task_id].last_change_results = null;
 
     save_db();
@@ -205,6 +207,35 @@ function remove_subscribe(task_id){
 //Или undefined если ничего не найдено
 function run_task(task_id, callback){
 
+    //Схема мест купе в плацкарте
+    var kupe_4 = {
+        "1-4": [1, 2, 3, 4],
+        "5-8": [5, 6, 7, 8],
+        "9-12": [9, 10, 11, 12],
+        "13-16": [13, 14, 15, 16],
+        "17-20": [17, 18, 19, 20],
+        "21-24": [21, 22, 23, 24],
+        "25-28": [25, 26, 27, 28],
+        "29-32": [29, 30, 31, 32],
+        "33-36": [33, 34, 35, 36]
+    };
+
+    //Схема мест купе в плацкарте с боковушками
+    var kupe_6= {
+        "2 купе": [5, 6, 7, 8, 51, 52],
+        "3 купе": [9, 10, 11, 12, 49, 50],
+        "4 купе": [13, 14, 15, 16, 45, 46],
+        "5 купе": [21, 22, 23, 24, 43, 44],
+        "6 купе": [25, 26, 27, 28, 41, 42],
+        "7 купе": [29, 30, 31, 32, 39, 40],
+        "8 купе": [33, 34, 35, 36, 37, 38] };
+
+    function is_array_include(small_arr, big_arr){
+        small_arr.every(function(element){
+            return big_arr.indexOf(element) >= 0;
+        })
+    }
+
     //Функа аналирует данные по поезду и в соответствии с заданием выставляет решение 
     function analyze_solution(solution, task_item){
         var solve = {};
@@ -215,37 +246,101 @@ function run_task(task_id, callback){
         solve.num = solution.num;
         solve.types = solution.types;
 
+
+        var txt_result = "";
         var v_is_solution_found = false;
-        if (task.is_report_all){
-            v_is_solution_found = true;
-        }
-        else {
-            solve.types.forEach(function(item){
-                //Сообщать если появились купе
-                if (task.is_report_kupe && item.title == "Купе")
-                    v_is_solution_found = true;
-                //Сообщать, если появились плацкарты
-                if (task.is_report_plac && item.title == "Плацкарт")
-                    v_is_solution_found = true;
-                //Сообщать если плацкартов стало меньше чем
-                if (item.title == "Плацкарт" &&
-                    task.is_report_less_plac &&
-                    parseInt(item.places) <= parseInt(task.cnt_less_plac) )
-                    v_is_solution_found = true;
-                //Сообщать если плацкартов больше чем
-                if (item.title == "Плацкарт" &&
-                    task.is_report_greatest_plac &&
-                    parseInt(item.places) >= parseInt(task.cnt_greatest_plac) )
-                    v_is_solution_found = true;
-                if (!v_is_solution_found && is_need_lookup_for_places(task_item)){
-                    console.log(solution);
-                }
-                if (v_is_solution_found)
-                    return;
-            });
-        }
+        var v_is_need_lookup_for_places = is_need_lookup_for_places(task_item);
+
+
+        txt_result = `Поезд ${solve.num} \n`;
+
+        solve.types.forEach(function(item){
+           //Случай, когда надо просто сообщить о наличии мест
+           if (!v_is_need_lookup_for_places){
+               if (task.is_report_all)
+                   v_is_solution_found = true;
+               //Сообщать если появились купе
+               if (task.is_report_kupe && item.title == "Купе")
+                   v_is_solution_found = true;
+               //Сообщать, если появились плацкарты
+               if (task.is_report_plac && item.title == "Плацкарт")
+                   v_is_solution_found = true;
+               //Сообщать если плацкартов стало меньше чем
+               if (item.title == "Плацкарт" &&
+                   task.is_report_less_plac &&
+                   parseInt(item.places) <= parseInt(task.cnt_less_plac) )
+                   v_is_solution_found = true;
+               //Сообщать если плацкартов больше чем
+               if (item.title == "Плацкарт" &&
+                   task.is_report_greatest_plac &&
+                   parseInt(item.places) >= parseInt(task.cnt_greatest_plac) )
+                   v_is_solution_found = true;
+               txt_result += `${item.title}: ${item.places} \n`;
+           }
+           else{
+              //Надо делать более глубокий анализ по плацкартам
+              if (item.title == "Плацкарт"){
+                    //Пробегаемся по вагонам
+                    item.place_detail.forEach(function(coach){
+                        coach.places.forEach(function(coach_detail){
+                            var finded_places = "";
+                            coach_detail.sort(function(a,b){return a-b; });
+                            coach_detail.forEach(function(place_num){
+                                if (task.is_report_low_plac && (place_num % 2)) {
+                                    finded_places += ` ${place_num}`;
+                                    v_is_solution_found = true;
+                                }
+                                if (task.is_report_high_plac && !(place_num %2)) {
+                                    finded_places += ` ${place_num}`;
+                                    v_is_solution_found = true;
+                                }
+                            });
+                            if (task.is_report_full_kupe_4){
+                                for (kupe_name in kupe_4){
+                                    if (is_array_include(kupe_4.kupe_name, coach_detail)
+                                }
+                            }
+
+                        });
+                    });
+              }
+
+           }
+
+
+        });
+
+        // if (task.is_report_all){
+        //     v_is_solution_found = true;
+        // }
+        // else {
+        //     solve.types.forEach(function(item){
+        //         //Сообщать если появились купе
+        //         if (task.is_report_kupe && item.title == "Купе")
+        //             v_is_solution_found = true;
+        //         //Сообщать, если появились плацкарты
+        //         if (task.is_report_plac && item.title == "Плацкарт")
+        //             v_is_solution_found = true;
+        //         //Сообщать если плацкартов стало меньше чем
+        //         if (item.title == "Плацкарт" &&
+        //             task.is_report_less_plac &&
+        //             parseInt(item.places) <= parseInt(task.cnt_less_plac) )
+        //             v_is_solution_found = true;
+        //         //Сообщать если плацкартов больше чем
+        //         if (item.title == "Плацкарт" &&
+        //             task.is_report_greatest_plac &&
+        //             parseInt(item.places) >= parseInt(task.cnt_greatest_plac) )
+        //             v_is_solution_found = true;
+        //         if (!v_is_solution_found && is_need_lookup_for_places(task_item)){
+        //             console.log(solution);
+        //         }
+        //         if (v_is_solution_found)
+        //             return;
+        //     });
+        // }
         if (v_is_solution_found)
         {
+            //TOdo надо проверять по всей видимости не само решение а только текстовое представление
             if (!deepCompare(task_item.prev_solve, solve)){
                 task_item.prev_solve = solve;
                 task_item.last_change_results = new Date();
@@ -294,8 +389,8 @@ function run_task(task_id, callback){
                                       if (error)
                                           callback(error, null);
                                       else{
-                                          console.log(places_info);
-                                          
+                                          // data.places_info = places_info;
+                                          //console.log(places_info);
                                           analyze_solution(data, subscribe_list[task_id]);
                                           save_db();
                                           callback(null, subscribe_list[task_id]);

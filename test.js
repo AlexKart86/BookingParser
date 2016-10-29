@@ -28,3 +28,8 @@
 //
 // subscribe.debug();
 
+var i = 11;
+
+if (!(i%2)){
+    console.log("Yea");
+}
