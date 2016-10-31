@@ -121,16 +121,16 @@
                     return;
                 }
                 else {
-                    var body = `Поезд ${data.result.num} \n`;
-                    $.each(data.result.types, function(idx, item){
-                        body += `${item.title}: ${item.places} \n`;
-                    });
+//                    var body = `Поезд ${data.result.num} \n`;
+//                    $.each(data.result.types, function(idx, item){
+//                        body += `${item.title}: ${item.places} \n`;
+//                    });
 
                     if (last_modified != data.last_modified ||
                             $('#is_infinite_loop').prop('checked'))
                     {
                         Push.create("Беги за билетами", {
-                            body: body,
+                            body: data.result,
                             requireInteraction: true,
                             onClick: function () {
                                 window.focus();

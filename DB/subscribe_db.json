@@ -1,0 +1,24 @@
+{
+    "030361ad-472a-2aeb-c68e-30d29cdc9bf6": {
+        "task": {
+            "station_id_from": "2200001",
+            "station_id_to": "2218000",
+            "date_dep": "05.11.2016",
+            "train": "141К",
+            "is_report_all": false,
+            "is_report_kupe": false,
+            "is_report_plac": false,
+            "is_report_less_plac": false,
+            "cnt_less_plac": "",
+            "is_report_greatest_plac": false,
+            "cnt_greatest_plac": "",
+            "is_report_low_plac": false,
+            "is_report_high_plac": false,
+            "is_report_full_kupe_4": true,
+            "is_report_full_kupe_6": false
+        },
+        "prev_solve": {},
+        "prev_solve_txt": "",
+        "last_change_results": null
+    }
+}

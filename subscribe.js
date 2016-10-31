@@ -282,7 +282,8 @@ function run_task(task_id, callback){
               if (item.title == "Плацкарт"){
                     //Пробегаемся по вагонам
                     item.place_detail.forEach(function(coach){
-                        coach.places.forEach(function(coach_detail){
+                         for (var i in coach.places) {
+                            var coach_detail = coach.places[i];
                             var finded_places = "";
                             coach_detail.sort(function(a,b){return a-b; });
                             coach_detail.forEach(function(place_num){
@@ -296,12 +297,23 @@ function run_task(task_id, callback){
                                 }
                             });
                             if (task.is_report_full_kupe_4){
-                                for (kupe_name in kupe_4){
-                                    if (is_array_include(kupe_4.kupe_name, coach_detail)
+                                for (var kupe_name in kupe_4){
+                                    if (is_array_include(kupe_4[kupe_name], coach_detail)){
+                                        finded_places += ` ${kupe_name}`;
+                                        v_is_solution_found = true;
+                                    }
                                 }
                             }
-
-                        });
+                            if (task.is_report_full_kupe_6){
+                                for (var kupe_name in kupe_6){
+                                    if (is_array_include(kupe_6[kupe_name], coach_detail)){
+                                        finded_places += ` ${kupe_name}`;
+                                        v_is_solution_found = true;
+                                    }
+                                }
+                            }
+                        }
+                        txt_result += `Вагон: ${coach.num} ` + finded_places + '\n';
                     });
               }
 
@@ -343,6 +355,7 @@ function run_task(task_id, callback){
             //TOdo надо проверять по всей видимости не само решение а только текстовое представление
             if (!deepCompare(task_item.prev_solve, solve)){
                 task_item.prev_solve = solve;
+                task_item.prev_solve_txt  = txt_result;
                 task_item.last_change_results = new Date();
             }
         }
@@ -397,9 +410,11 @@ function run_task(task_id, callback){
                                       }
                                   }, 'П');
                               }
-                              analyze_solution(data, subscribe_list[task_id]);
-                              save_db();
-                              callback(null, subscribe_list[task_id]);  
+                              else {
+                                  analyze_solution(data, subscribe_list[task_id]);
+                                  save_db();
+                                  callback(null, subscribe_list[task_id]);
+                              }
                           }
                       }
                   });

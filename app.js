@@ -126,7 +126,7 @@ var server =  http.createServer(function(req, res){
                   if (!handle_errors(error, res)) return;
                   res.write(JSON.stringify({
                       last_modified: data.last_change_results,
-                      result: data.prev_solve
+                      result: data.prev_solve_txt
                   }));
                   res.end();
               })
