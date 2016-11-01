@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="html/typeaheadjs.css" />
 <div class="container-fluid">
     <div class="row vertical-center-row">
-        <form>
+        <form id="main_form">
             <div class="form-group">
                <input class="selectpicker form-control" id="station_from" required placeholder="Станция отправления"> </input>
             </div>
@@ -28,12 +28,12 @@
                 </div>
             </div>
             <div class="form-group">
-                <input class="selectpicker form-control" id="train" placeholder="Номер поезда"> </input>
+                <input class="selectpicker form-control" id="train" placeholder="Номер поезда" required> </input>
             </div>
             <div class="checkbox ">
                 <label><input type="checkbox" id="is_report_all"> Сообщать, если есть хоть что-нибудь</label>
                 <label><input type="checkbox" id="is_report_kupe"> Сообщать если есть купе</label>
-                <label><input type="checkbox" id="is_report_plac"> Сообщать если есть плацкарт</label>
+                <label><input type="checkbox" class="plac_radio" id="is_report_plac"> Сообщать если есть плацкарт</label>
                 <label><input type="checkbox" id="is_cycle_analyze">Сообщать об изменениях с количеством мест</label>
                 <label><input type="checkbox" id="is_infinite_loop">Долбить без остановки если что-то нашлось</label>
                 <label><input type="checkbox" id="is_report_less_plac">Сообщить, если плацкартов стало меньше, чем
@@ -41,15 +41,16 @@
                 <label><input type="checkbox" id="is_report_greatest_plac">Сообщить, если плацкартов стало больше, чем
                     <input type="number" id="cnt_greatest_plac" placeholder="Макс. плацкартов"> </label>
 
-                <label><input type="checkbox" id="is_report_low_plac"> Сообщать если есть нижние плацкарт</label>
-                <label><input type="checkbox" id="is_report_high_plac"> Сообщать если есть верхние плацкарт</label>
-                <label><input type="checkbox" id="is_report_full_kupe_4"> Сообщать, если есть полное купе в плацкарте (4 места) </label>
-                <label><input type="checkbox" id="is_report_full_kupe_6"> Сообщать, если есть полное купе + боковушки (6 мест) </label>
+                <label><input type="checkbox" class="plac_radio" id="is_report_low_plac"> Сообщать если есть нижние плацкарт</label>
+                <label><input type="checkbox" class="plac_radio" id="is_report_high_plac"> Сообщать если есть верхние плацкарт</label>
+                <label><input type="checkbox" class="plac_radio" id="is_report_full_kupe_4"> Сообщать, если есть полное купе в плацкарте (4 места) </label>
+                <label><input type="checkbox" class="plac_radio" id="is_report_full_kupe_6"> Сообщать, если есть полное купе + боковушки (6 мест) </label>
             </div>
             <div class="form-group">
                 <button type="button" class="btn btn-primary" id="start">Отслеживать</button>
             </div>
         </form>
+
         <div class="container"><span class="label label-primary" id="upd_time"></span></div>
         <div class="container"><span class="label label-danger" id="error"></span> </div>
     </div>
@@ -76,12 +77,19 @@
     table .collapse.in {
         display:table-row;
     }
+    input:invalid {
+        border-color: red;
+    }
 </style>
 
 <script>
     var station_list = {};
     var task_id = "";
     var last_modified = null;
+
+    function ValidateForm(){
+
+    }
 
     var load_station_list = function(query, syncResult, asyncResult){
         $.ajax({
@@ -161,15 +169,11 @@
     }
 
     var start_on_click = function() {
-//            Push.create("Hello world!", {
-//                body: "How's it hangin'?",
-//                requireInteraction: true,
-//                //timeout: 30000,
-//                onClick: function () {
-//                    window.focus();
-//                    this.close();
-//                }
-//            });
+
+        if (!$('#main_form')[0].checkValidity()){
+               return;
+        }
+
         //Подписываемся
         var station_from = station_list[$('#station_from').val()];
         var station_to = station_list[$('#station_to').val()];
@@ -207,6 +211,7 @@
 
     };
 
+
     $(function() {
         $('#stop').hide();
         $('#dtp').datetimepicker({
@@ -220,6 +225,15 @@
             source: load_station_list,
             display: 'title'
         });
+
+        $('.plac_radio').on('click', function(){
+           var cur_element = $(this);
+           if ($(this).is(':checked')){
+               $('.plac_radio').prop('checked', false);
+               $(this).prop('checked', true);
+           }
+        });
+
         $('#start').on('click', start_on_click);
         //Спрашиваем у юзера разрешения срать ему пуш уведомлениями
         Push.Permission.request();

@@ -594,5 +594,47 @@
         },
         "prev_solve_txt": "Поезд 141К \nВагон: 9  25-28 29-32 6 купе 7 купе\nВагон: 10  1-4 21-24 25-28 29-32 33-36 5 купе 6 купе 7 купе 8 купе\nВагон: 11  25-28 29-32 33-36 6 купе 7 купе 8 купе\nВагон: 12  25-28 29-32 33-36 6 купе 7 купе 8 купе\n",
         "last_change_results": "2016-11-01T13:13:59.772Z"
+    },
+    "bb2e1332-1efb-f722-8521-7e2b1d1abfe2": {
+        "task": {
+            "date_dep": "05.11.2016",
+            "train": "141К",
+            "is_report_all": false,
+            "is_report_kupe": false,
+            "is_report_plac": false,
+            "is_report_less_plac": false,
+            "cnt_less_plac": "",
+            "is_report_greatest_plac": false,
+            "cnt_greatest_plac": "",
+            "is_report_low_plac": false,
+            "is_report_high_plac": false,
+            "is_report_full_kupe_4": false,
+            "is_report_full_kupe_6": false
+        },
+        "prev_solve": {},
+        "prev_solve_txt": "",
+        "last_change_results": null
+    },
+    "471db140-bd10-cda3-220d-682900fc70f0": {
+        "task": {
+            "station_id_from": "2200001",
+            "station_id_to": "2208001",
+            "date_dep": "25.11.2016",
+            "train": "141К",
+            "is_report_all": false,
+            "is_report_kupe": false,
+            "is_report_plac": false,
+            "is_report_less_plac": false,
+            "cnt_less_plac": "",
+            "is_report_greatest_plac": false,
+            "cnt_greatest_plac": "",
+            "is_report_low_plac": false,
+            "is_report_high_plac": false,
+            "is_report_full_kupe_4": false,
+            "is_report_full_kupe_6": false
+        },
+        "prev_solve": {},
+        "prev_solve_txt": "",
+        "last_change_results": null
     }
 }
