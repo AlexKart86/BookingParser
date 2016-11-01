@@ -231,7 +231,7 @@ function run_task(task_id, callback){
         "8 купе": [33, 34, 35, 36, 37, 38] };
 
     function is_array_include(small_arr, big_arr){
-        small_arr.every(function(element){
+        return small_arr.every(function(element){
             return big_arr.indexOf(element) >= 0;
         })
     }
@@ -283,7 +283,7 @@ function run_task(task_id, callback){
                     //Пробегаемся по вагонам
                     item.place_detail.forEach(function(coach){
                          for (var i in coach.places) {
-                            var coach_detail = coach.places[i];
+                            var coach_detail = coach.places[i].map(item => parseInt(item));
                             var finded_places = "";
                             coach_detail.sort(function(a,b){return a-b; });
                             coach_detail.forEach(function(place_num){
