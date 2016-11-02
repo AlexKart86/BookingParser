@@ -636,5 +636,46 @@
         "prev_solve": {},
         "prev_solve_txt": "",
         "last_change_results": null
+    },
+    "0086e22d-7d7a-84a5-3f6b-a6786902d8a8": {
+        "task": {
+            "station_id_from": "2200001",
+            "station_id_to": "2218000",
+            "date_dep": "12.11.2016",
+            "train": "141",
+            "is_report_all": true,
+            "is_report_kupe": false,
+            "is_report_plac": false,
+            "is_report_less_plac": false,
+            "cnt_less_plac": "",
+            "is_report_greatest_plac": false,
+            "cnt_greatest_plac": "",
+            "is_report_low_plac": false,
+            "is_report_high_plac": false,
+            "is_report_full_kupe_4": false,
+            "is_report_full_kupe_6": false
+        },
+        "prev_solve": {
+            "num": "141К",
+            "types": [
+                {
+                    "title": "Люкс",
+                    "letter": "Л",
+                    "places": 14
+                },
+                {
+                    "title": "Купе",
+                    "letter": "К",
+                    "places": 118
+                },
+                {
+                    "title": "Плацкарт",
+                    "letter": "П",
+                    "places": 203
+                }
+            ]
+        },
+        "prev_solve_txt": "Поезд 141К \nЛюкс: 14 \nКупе: 118 \nПлацкарт: 203 \n",
+        "last_change_results": "2016-11-02T07:29:25.289Z"
     }
 }

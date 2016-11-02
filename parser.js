@@ -158,7 +158,7 @@ function find_trains_by_num(station_id_from, station_id_to, date_dep, token, tra
              //Пробегаемся по всем поездам
              if (isIterable(data))
                  data.forEach(function(item){
-                    if (item.num == train_num) {
+                    if (parseInt(item.num.replace(/[^\/\d]/g,''))  == parseInt(train_num.replace(/[^\/\d]/g,''))) {
                         is_train_found = true;
                         callback(null, item);
                         return;

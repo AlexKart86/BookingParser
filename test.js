@@ -30,6 +30,10 @@
 
 var i = 11;
 
-if (!(i%2)){
-    console.log("Yea");
-}
+var value1 = "073 К";
+var value2 = "073 ssdsd";
+
+
+
+console.log(parseInt(value1.replace(/[^\/\d]/g,'')));
+console.log(parseInt(value2.replace(/[^\/\d]/g,'')));
