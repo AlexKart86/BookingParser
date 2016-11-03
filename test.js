@@ -35,5 +35,5 @@ var value2 = "073 ssdsd";
 
 
 
-console.log(parseInt(value1.replace(/[^\/\d]/g,'')));
-console.log(parseInt(value2.replace(/[^\/\d]/g,'')));
+console.log(parseFloat(value1.replace(/[^\/\d]/g,'')));
+console.log(parseFloat(value2.replace(/[^\/\d]/g,'')));
