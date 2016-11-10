@@ -4,6 +4,12 @@ var config = require('./config');
 var parser = require('./parser');
 
 
+function Task(task_params){
+    
+}
+
+
+
 var subscribe_list = {};
 
 //Сперто из
@@ -191,6 +197,7 @@ function add_edit_subscribe(task_id, task){
     //Текстовое описалово с тем, что мы нашли
     subscribe_list[task_id].prev_solve_txt = "";
     subscribe_list[task_id].last_change_results = null;
+    subscribe_list[task_id].is_running = false;
 
     save_db();
     return task_id;
@@ -313,7 +320,8 @@ function run_task(task_id, callback){
                                 }
                             }
                         }
-                        txt_result += `Вагон: ${coach.num} ` + finded_places + '\n';
+                        if (finded_places.length)
+                          txt_result += `Вагон: ${coach.num} ` + finded_places + '\n';
                     });
               }
 
@@ -429,6 +437,9 @@ function debug(){
     console.log(subscribe_list);
 }
 
+function get_tasks(){
+    return subscribe_list;
+}
 
 
 module.exports.remove_subscribe = remove_subscribe;
@@ -436,3 +447,4 @@ module.exports.add_edit_subscribe = add_edit_subscribe;
 module.exports.run_task = run_task;
 module.exports.init = init;
 module.exports.debug = debug;
+module.exports.get_tasks = get_tasks;

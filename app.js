@@ -74,6 +74,9 @@ var server =  http.createServer(function(req, res){
       case '/subscribe':
           sendFile(res, 'html/subscribe.html');
           break;
+      case '/tasks':
+          sendFile(res, 'html/tasks.html');
+          break;
       case '/get_stations':
           parse_body(req, function(body){
              body = JSON.parse(body);
@@ -131,6 +134,10 @@ var server =  http.createServer(function(req, res){
                   res.end();
               })
           });
+          break;
+      case '/task_list':
+          res.write(JSON.stringify(subscribe.get_tasks()));
+          res.end();
           break;
       default :
           try {
