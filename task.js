@@ -29,6 +29,11 @@ function Task(options){
        self.emit("change"); 
        last_result = value;
     });
+
+    var state = TASK_STATE.SUSPENDED;
+    self.__defineGetter__("state", function(){
+        
+    })
 }
 
 Task.prototype =  new ee.EventEmitter;
