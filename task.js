@@ -3,6 +3,7 @@
  */
 
 var ee = require('events');
+var parser = require('./parser');
 
 //
 const TASK_STATE = {
@@ -22,21 +23,29 @@ function Task(options){
     var options = options;
     
     var last_result = LAST_RESULT.NOT_RUNNING;
-    self.__defineGetter__("last_result", function(){
-        return last_result;
-    });
-    self.__defineSetter__("last_result", function(value){
-       self.emit("change"); 
-       last_result = value;
-    });
+
+    Object.defineProperty(self, 'last_result',
+        {
+           /* set: function(val){
+                self.emit("change", last_result, val);
+                last_result = val;
+            },*/
+            get: () => last_result,
+            writable: false
+        });
 
     var state = TASK_STATE.SUSPENDED;
-    self.__defineGetter__("state", function(){
-        
-    })
+    Object.defineProperty(self, 'state',
+        {
+          /* set: function (val) {
+               self.emit("change_state", state, val);
+           },*/
+            get: () => state,
+            writable: false
+        });
 }
 
-Task.prototype =  new ee.EventEmitter;
+Task.prototype = new ee.EventEmitter();
 
-module.exports.Task = Task;
+module.exports.Task =  Task;
 module.exports.LAST_RESULT = LAST_RESULT;
