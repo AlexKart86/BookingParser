@@ -2,6 +2,7 @@
  * Created by alex_kart on 10.11.2016.
  */
 
+
 var ee = require('events');
 var parser = require('./parser');
 
@@ -19,30 +20,27 @@ const LAST_RESULT = {
 
 
 function Task(options){
+    'use strict';
     var self = this;
     var options = options;
     
     var last_result = LAST_RESULT.NOT_RUNNING;
 
+
     Object.defineProperty(self, 'last_result',
         {
-           /* set: function(val){
-                self.emit("change", last_result, val);
-                last_result = val;
-            },*/
-            get: () => last_result,
-            writable: false
+            value: LAST_RESULT.NOT_RUNNING,
+            writable: false,
+            configurable: true
         });
 
     var state = TASK_STATE.SUSPENDED;
     Object.defineProperty(self, 'state',
         {
-          /* set: function (val) {
-               self.emit("change_state", state, val);
-           },*/
-            get: () => state,
             writable: false
+
         });
+    last_result = LAST_RESULT.SUCCESS;
 }
 
 Task.prototype = new ee.EventEmitter();

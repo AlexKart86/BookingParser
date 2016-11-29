@@ -1,8 +1,11 @@
+'use strict';
 var tst = require('./task.js');
 
 var task = new tst.Task({a: 2});
 
-task.last_result = tst.LAST_RESULT.FAILED;
+console.log(task.last_result);
+
+//task.last_result = tst.LAST_RESULT.FAILED;
 
 console.log(task.last_result);
 
@@ -16,6 +19,6 @@ task.on('change', function(){
 });
 
 //console.log(task.last_result);
-task.last_result = tst.LAST_RESULT.SUCCESS;
+//task.last_result = tst.LAST_RESULT.SUCCESS;
 //console.log(task.last_result);
 
