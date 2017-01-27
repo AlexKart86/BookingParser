@@ -3,10 +3,12 @@ var tst = require('./task.js');
 
 var task = new tst.Task({a: 2});
 
+console.log(task.task_id);
+console.log(task.state);
 console.log(task.last_result);
 
 //task.last_result = tst.LAST_RESULT.FAILED;
-
+/*
 console.log(task.last_result);
 
 task.on('change', function(){
@@ -20,5 +22,5 @@ task.on('change', function(){
 
 //console.log(task.last_result);
 //task.last_result = tst.LAST_RESULT.SUCCESS;
-//console.log(task.last_result);
+//console.log(task.last_result);*/
 

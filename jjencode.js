@@ -2,7 +2,7 @@ function jjdecode(str){
 
     var t = str;
 
-    var result = ""
+    var result = "";
 
     function out(c){
         result += c;
