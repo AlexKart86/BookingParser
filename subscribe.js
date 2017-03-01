@@ -275,12 +275,12 @@ function run_task(task_id, callback){
                //Сообщать если плацкартов стало меньше чем
                if (item.title == "Плацкарт" &&
                    task.is_report_less_plac &&
-                   parseInt(item.places) <= parseInt(task.cnt_less_plac) )
+                   parseInt(item.places) < parseInt(task.cnt_less_plac) )
                    v_is_solution_found = true;
                //Сообщать если плацкартов больше чем
                if (item.title == "Плацкарт" &&
                    task.is_report_greatest_plac &&
-                   parseInt(item.places) >= parseInt(task.cnt_greatest_plac) )
+                   parseInt(item.places) > parseInt(task.cnt_greatest_plac) )
                    v_is_solution_found = true;
                txt_result += `${item.title}: ${item.places} \n`;
            }

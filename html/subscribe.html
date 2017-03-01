@@ -102,7 +102,7 @@
                 //console.log(data);
                 $.each(data, function(idx, dt){
                     //console.log(dt);
-                    station_list[dt.title] = dt.station_id;
+                    station_list[dt.label] = dt.value;
                 });
                 asyncResult(data);
             }
@@ -133,9 +133,8 @@
 //                    $.each(data.result.types, function(idx, item){
 //                        body += `${item.title}: ${item.places} \n`;
 //                    });
-
-                    if (last_modified != data.last_modified ||
-                            $('#is_infinite_loop').prop('checked'))
+                    if ((last_modified != data.last_modified ||
+                            $('#is_infinite_loop').prop('checked')) && (data.result.length > 0))
                     {
                         Push.create("Беги за билетами", {
                             body: data.result,
@@ -223,7 +222,7 @@
             highlight: true
         }, {
             source: load_station_list,
-            display: 'title'
+            display: 'label'
         });
 
         $('.plac_radio').on('click', function(){

@@ -386,8 +386,8 @@ function find_trains_ext(station_id_from, station_id_to, date_dep, token, callba
 
 function ask_station_list(keywords, callback){
     var options = {
-        url: config.booking_search_station_prefix + encodeURIComponent(keywords) + '/',
-        method: 'POST'
+        url: config.booking_search_station_prefix + '/?term=' + encodeURIComponent(keywords),
+        method: 'GET'
     };
     main_req(options, function(error, response, body) {
         try {
@@ -398,11 +398,11 @@ function ask_station_list(keywords, callback){
                    callback(new BookingAnswerError(obj.value), null);
                    return;
                 }
-                if (!obj.value) {
-                  callback(new BookingAnswerError("В списке станций нет value"), null);
+                if (!obj) {
+                  callback(new BookingAnswerError("Объект со списком станций пустой"), null);
                   return;
                 }
-                callback(null, obj.value);
+                callback(null, obj);
             }
             else {
                 callback(error, null);

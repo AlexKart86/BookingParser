@@ -1,26 +1,23 @@
 'use strict';
 var tst = require('./task.js');
+var ee = require('events');
 
-var task = new tst.Task({a: 2});
+/*var task = new tst.Task({a: 2});
 
 console.log(task.task_id);
 console.log(task.state);
-console.log(task.last_result);
+console.log(task.last_result);*/
 
-//task.last_result = tst.LAST_RESULT.FAILED;
-/*
-console.log(task.last_result);
+class Ct extends ee.EventEmitter
+{
+    constructor()
+    {
+        super();
+        this.x = Array(9).fill('x');
+    }
+}
 
-task.on('change', function(){
-   console.log(this.last_result);
+var m = new Ct();
 
-});
-
-task.on('change', function(){
-   console.log('change2')
-});
-
-//console.log(task.last_result);
-//task.last_result = tst.LAST_RESULT.SUCCESS;
-//console.log(task.last_result);*/
+console.log(m.x);
 

@@ -149,7 +149,7 @@
                 //console.log(data);
                 $.each(data, function(idx, dt){
                      //console.log(dt);
-                     station_list[dt.title] = dt.station_id;
+                     station_list[dt.label] = dt.value;
                 });
                 asyncResult(data);
             }
