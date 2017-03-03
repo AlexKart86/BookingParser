@@ -395,5 +395,426 @@
         },
         "prev_solve_txt": "Поезд 013О \nВагон: 9  33-36\nВагон: 10  33-36\n",
         "last_change_results": "2016-11-10T09:15:54.892Z"
+    },
+    "1bdd7b82-12f6-64bd-2ec5-a408ed138f38": {
+        "task": {
+            "station_id_from": "2200001",
+            "station_id_to": "2208001",
+            "date_dep": "04.02.2017",
+            "train": "141К",
+            "is_report_all": false,
+            "is_report_kupe": false,
+            "is_report_plac": false,
+            "is_report_less_plac": false,
+            "cnt_less_plac": "",
+            "is_report_greatest_plac": true,
+            "cnt_greatest_plac": "16",
+            "is_report_low_plac": false,
+            "is_report_high_plac": false,
+            "is_report_full_kupe_4": false,
+            "is_report_full_kupe_6": false
+        },
+        "prev_solve": {},
+        "prev_solve_txt": "",
+        "last_change_results": null,
+        "is_running": false
+    },
+    "505e3b36-fc0d-3fc8-5efc-b34fe3a137e7": {
+        "task": {
+            "station_id_from": "2200001",
+            "station_id_to": "2208001",
+            "date_dep": "04.02.2017",
+            "train": "099",
+            "is_report_all": false,
+            "is_report_kupe": false,
+            "is_report_plac": false,
+            "is_report_less_plac": false,
+            "cnt_less_plac": "",
+            "is_report_greatest_plac": true,
+            "cnt_greatest_plac": "16",
+            "is_report_low_plac": false,
+            "is_report_high_plac": false,
+            "is_report_full_kupe_4": false,
+            "is_report_full_kupe_6": false
+        },
+        "prev_solve": {},
+        "prev_solve_txt": "",
+        "last_change_results": null,
+        "is_running": false
+    },
+    "8638a17a-7758-7600-27e8-51c3420fd496": {
+        "task": {
+            "station_id_from": "2218098",
+            "station_id_to": "2200001",
+            "date_dep": "05.02.2017",
+            "train": "144",
+            "is_report_all": false,
+            "is_report_kupe": false,
+            "is_report_plac": false,
+            "is_report_less_plac": false,
+            "cnt_less_plac": "",
+            "is_report_greatest_plac": false,
+            "cnt_greatest_plac": "",
+            "is_report_low_plac": false,
+            "is_report_high_plac": false,
+            "is_report_full_kupe_4": false,
+            "is_report_full_kupe_6": false
+        },
+        "prev_solve": {},
+        "prev_solve_txt": "",
+        "last_change_results": null,
+        "is_running": false
+    },
+    "16a98faa-d804-8a80-f5d0-79cb706441d3": {
+        "task": {
+            "station_id_from": "2218500",
+            "station_id_to": "2200001",
+            "date_dep": "05.03.2017",
+            "train": "118",
+            "is_report_all": false,
+            "is_report_kupe": false,
+            "is_report_plac": false,
+            "is_report_less_plac": false,
+            "cnt_less_plac": "",
+            "is_report_greatest_plac": true,
+            "cnt_greatest_plac": "7",
+            "is_report_low_plac": false,
+            "is_report_high_plac": false,
+            "is_report_full_kupe_4": false,
+            "is_report_full_kupe_6": false
+        },
+        "prev_solve": {},
+        "prev_solve_txt": "",
+        "last_change_results": null,
+        "is_running": false
+    },
+    "37acd08c-2aba-b467-e588-ce9698cc2f54": {
+        "task": {
+            "date_dep": "05.03.2017",
+            "train": "118",
+            "is_report_all": false,
+            "is_report_kupe": false,
+            "is_report_plac": false,
+            "is_report_less_plac": false,
+            "cnt_less_plac": "",
+            "is_report_greatest_plac": true,
+            "cnt_greatest_plac": "2",
+            "is_report_low_plac": false,
+            "is_report_high_plac": false,
+            "is_report_full_kupe_4": false,
+            "is_report_full_kupe_6": false
+        },
+        "prev_solve": {},
+        "prev_solve_txt": "",
+        "last_change_results": null,
+        "is_running": false
+    },
+    "f74c9931-60c9-8e60-4fab-4f3911d99ce0": {
+        "task": {
+            "station_id_from": "2218500",
+            "station_id_to": "2200001",
+            "date_dep": "05.03.2017",
+            "train": "118",
+            "is_report_all": false,
+            "is_report_kupe": false,
+            "is_report_plac": false,
+            "is_report_less_plac": false,
+            "cnt_less_plac": "",
+            "is_report_greatest_plac": true,
+            "cnt_greatest_plac": "2",
+            "is_report_low_plac": false,
+            "is_report_high_plac": false,
+            "is_report_full_kupe_4": false,
+            "is_report_full_kupe_6": false
+        },
+        "prev_solve": {
+            "num": "118Ш",
+            "types": [
+                {
+                    "title": "Люкс",
+                    "letter": "Л",
+                    "places": 13
+                },
+                {
+                    "title": "Купе",
+                    "letter": "К",
+                    "places": 21
+                },
+                {
+                    "title": "Плацкарт",
+                    "letter": "П",
+                    "places": 5
+                }
+            ]
+        },
+        "prev_solve_txt": "Поезд 118Ш \nЛюкс: 13 \nКупе: 21 \nПлацкарт: 5 \n",
+        "last_change_results": "2017-02-23T08:53:49.645Z",
+        "is_running": false
+    },
+    "10946197-ab48-e38a-7f6d-6283e34854a8": {
+        "task": {
+            "station_id_from": "2218500",
+            "station_id_to": "2200001",
+            "date_dep": "05.03.2017",
+            "train": "118",
+            "is_report_all": false,
+            "is_report_kupe": false,
+            "is_report_plac": false,
+            "is_report_less_plac": false,
+            "cnt_less_plac": "",
+            "is_report_greatest_plac": true,
+            "cnt_greatest_plac": "6",
+            "is_report_low_plac": false,
+            "is_report_high_plac": false,
+            "is_report_full_kupe_4": false,
+            "is_report_full_kupe_6": false
+        },
+        "prev_solve": {},
+        "prev_solve_txt": "",
+        "last_change_results": null,
+        "is_running": false
+    },
+    "440f1475-500d-8c22-9264-67577f552aad": {
+        "task": {
+            "station_id_from": "2218500",
+            "station_id_to": "2200001",
+            "date_dep": "05.03.2017",
+            "train": "118",
+            "is_report_all": false,
+            "is_report_kupe": false,
+            "is_report_plac": false,
+            "is_report_less_plac": false,
+            "cnt_less_plac": "",
+            "is_report_greatest_plac": true,
+            "cnt_greatest_plac": "4",
+            "is_report_low_plac": false,
+            "is_report_high_plac": false,
+            "is_report_full_kupe_4": false,
+            "is_report_full_kupe_6": false
+        },
+        "prev_solve": {
+            "num": "118Ш",
+            "types": [
+                {
+                    "title": "Люкс",
+                    "letter": "Л",
+                    "places": 13
+                },
+                {
+                    "title": "Купе",
+                    "letter": "К",
+                    "places": 20
+                },
+                {
+                    "title": "Плацкарт",
+                    "letter": "П",
+                    "places": 5
+                }
+            ]
+        },
+        "prev_solve_txt": "Поезд 118Ш \nЛюкс: 13 \nКупе: 20 \nПлацкарт: 5 \n",
+        "last_change_results": "2017-02-23T09:09:52.837Z",
+        "is_running": false
+    },
+    "d059172f-1255-a54f-15f4-a26bda817898": {
+        "task": {
+            "station_id_to": "2200001",
+            "date_dep": "05.03.2017",
+            "train": "118",
+            "is_report_all": false,
+            "is_report_kupe": false,
+            "is_report_plac": false,
+            "is_report_less_plac": false,
+            "cnt_less_plac": "",
+            "is_report_greatest_plac": true,
+            "cnt_greatest_plac": "4",
+            "is_report_low_plac": false,
+            "is_report_high_plac": false,
+            "is_report_full_kupe_4": false,
+            "is_report_full_kupe_6": false
+        },
+        "prev_solve": {},
+        "prev_solve_txt": "",
+        "last_change_results": null,
+        "is_running": false
+    },
+    "d6dbf18d-9e83-fc7f-76e3-aac2d882486a": {
+        "task": {
+            "station_id_from": "2218500",
+            "station_id_to": "2200001",
+            "date_dep": "05.03.2017",
+            "train": "118",
+            "is_report_all": false,
+            "is_report_kupe": false,
+            "is_report_plac": false,
+            "is_report_less_plac": false,
+            "cnt_less_plac": "",
+            "is_report_greatest_plac": true,
+            "cnt_greatest_plac": "5",
+            "is_report_low_plac": false,
+            "is_report_high_plac": false,
+            "is_report_full_kupe_4": false,
+            "is_report_full_kupe_6": false
+        },
+        "prev_solve": {
+            "num": "118Ш",
+            "types": [
+                {
+                    "title": "Люкс",
+                    "letter": "Л",
+                    "places": 13
+                },
+                {
+                    "title": "Купе",
+                    "letter": "К",
+                    "places": 20
+                },
+                {
+                    "title": "Плацкарт",
+                    "letter": "П",
+                    "places": 54
+                }
+            ]
+        },
+        "prev_solve_txt": "Поезд 118Ш \nЛюкс: 13 \nКупе: 20 \nПлацкарт: 54 \n",
+        "last_change_results": "2017-02-23T09:40:39.736Z",
+        "is_running": false
+    },
+    "3b6ad160-577a-064c-7399-4b22d998f8ba": {
+        "task": {
+            "station_id_from": "2200001",
+            "station_id_to": "2218000",
+            "date_dep": "16.03.2017",
+            "train": "131",
+            "is_report_all": true,
+            "is_report_kupe": false,
+            "is_report_plac": false,
+            "is_report_less_plac": false,
+            "cnt_less_plac": "",
+            "is_report_greatest_plac": false,
+            "cnt_greatest_plac": "",
+            "is_report_low_plac": false,
+            "is_report_high_plac": false,
+            "is_report_full_kupe_4": false,
+            "is_report_full_kupe_6": false
+        },
+        "prev_solve": {
+            "num": "131О",
+            "types": [
+                {
+                    "id": "Л",
+                    "title": "Люкс",
+                    "letter": "Л",
+                    "places": 18
+                },
+                {
+                    "id": "К",
+                    "title": "Купе",
+                    "letter": "К",
+                    "places": 35
+                },
+                {
+                    "id": "П",
+                    "title": "Плацкарт",
+                    "letter": "П",
+                    "places": 1
+                }
+            ]
+        },
+        "prev_solve_txt": "Поезд 131О \nЛюкс: 18 \nКупе: 35 \nПлацкарт: 1 \n",
+        "last_change_results": "2017-03-01T08:45:21.697Z",
+        "is_running": false
+    },
+    "52a3d5fc-7877-c925-dd44-ed9f5e9ad4cb": {
+        "task": {
+            "station_id_from": "2200001",
+            "station_id_to": "2218000",
+            "date_dep": "10.03.2017",
+            "train": "131",
+            "is_report_all": false,
+            "is_report_kupe": false,
+            "is_report_plac": false,
+            "is_report_less_plac": false,
+            "cnt_less_plac": "",
+            "is_report_greatest_plac": true,
+            "cnt_greatest_plac": "9",
+            "is_report_low_plac": false,
+            "is_report_high_plac": false,
+            "is_report_full_kupe_4": false,
+            "is_report_full_kupe_6": false
+        },
+        "prev_solve": {
+            "num": "131О",
+            "types": [
+                {
+                    "id": "Л",
+                    "title": "Люкс",
+                    "letter": "Л",
+                    "places": 15
+                },
+                {
+                    "id": "К",
+                    "title": "Купе",
+                    "letter": "К",
+                    "places": 30
+                },
+                {
+                    "id": "П",
+                    "title": "Плацкарт",
+                    "letter": "П",
+                    "places": 10
+                }
+            ]
+        },
+        "prev_solve_txt": "Поезд 131О \nЛюкс: 15 \nКупе: 30 \nПлацкарт: 10 \n",
+        "last_change_results": "2017-03-03T14:40:51.641Z",
+        "is_running": false,
+        "is_solution_found": true
+    },
+    "3abb9825-2c52-d1fd-6d01-14853ef256d4": {
+        "task": {
+            "station_id_from": "2200001",
+            "station_id_to": "2218000",
+            "date_dep": "10.03.2017",
+            "train": "131",
+            "is_report_all": false,
+            "is_report_kupe": false,
+            "is_report_plac": false,
+            "is_report_less_plac": false,
+            "cnt_less_plac": "",
+            "is_report_greatest_plac": true,
+            "cnt_greatest_plac": "8",
+            "is_report_low_plac": false,
+            "is_report_high_plac": false,
+            "is_report_full_kupe_4": false,
+            "is_report_full_kupe_6": false
+        },
+        "prev_solve": {
+            "num": "131О",
+            "types": [
+                {
+                    "id": "Л",
+                    "title": "Люкс",
+                    "letter": "Л",
+                    "places": 15
+                },
+                {
+                    "id": "К",
+                    "title": "Купе",
+                    "letter": "К",
+                    "places": 30
+                },
+                {
+                    "id": "П",
+                    "title": "Плацкарт",
+                    "letter": "П",
+                    "places": 10
+                }
+            ]
+        },
+        "prev_solve_txt": "Поезд 131О \nЛюкс: 15 \nКупе: 30 \nПлацкарт: 10 \n",
+        "last_change_results": "2017-03-03T15:14:10.263Z",
+        "is_running": false,
+        "is_solution_found": true
     }
 }

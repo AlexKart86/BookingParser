@@ -133,8 +133,8 @@
 //                    $.each(data.result.types, function(idx, item){
 //                        body += `${item.title}: ${item.places} \n`;
 //                    });
-                    if ((last_modified != data.last_modified ||
-                            $('#is_infinite_loop').prop('checked')) && (data.result.length > 0))
+                    if  ( data.is_solution_found &&  (last_modified != data.last_modified ||
+                            $('#is_infinite_loop').prop('checked')) && data.result.length > 0 )
                     {
                         Push.create("Беги за билетами", {
                             body: data.result,
@@ -144,7 +144,6 @@
                                 this.close();
                             }
                         });
-
                     }
                 }
                 last_modified = data.last_modified;

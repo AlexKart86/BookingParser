@@ -358,15 +358,14 @@ function run_task(task_id, callback){
         //             return;
         //     });
         // }
-        if (v_is_solution_found)
-        {
+        
             //TOdo надо проверять по всей видимости не само решение а только текстовое представление
-            if (!deepCompare(task_item.prev_solve, solve)){
-                task_item.prev_solve = solve;
-                task_item.prev_solve_txt  = txt_result;
+        if (!deepCompare(task_item.prev_solve, solve)){
                 task_item.last_change_results = new Date();
-            }
         }
+        task_item.prev_solve = solve;
+        task_item.prev_solve_txt  = txt_result;
+        task_item.is_solution_found = v_is_solution_found;
 
     }
 
